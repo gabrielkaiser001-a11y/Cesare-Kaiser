@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cesare Kaiser – Künstler</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #1a1a1a;
+      --surface:   #242424;
+      --border:    #333;
+      --red:       #96281b;
+      --red-hover: #b03222;
+      --white:     #ede8e2;
+      --grey:      #7a7a7a;
+      --lgrey:     #aaa;
+      --font-d:    "Cormorant Garamond", serif;
+      --font-b:    "Jost", sans-serif;
+      --nav-h:     72px;
+      --pad:       clamp(20px, 4vw, 52px);
+      --ease:      cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--white); font-family:var(--font-b); font-weight:300; font-size:16px; line-height:1.7; overflow-x:hidden; }
+    a { color:inherit; text-decoration:none; }
+    img { display:block; max-width:100%; }
+    button { cursor:pointer; border:none; background:none; font:inherit; color:inherit; }
+
+    .page { display:none; }
+    .page.active { display:block; animation:fadeUp 0.4s var(--ease) both; }
+    #page-home.active { display:flex; }
+    @keyframes fadeUp { from {opacity:0;transform:translateY(12px);} to {opacity:1;transform:translateY(0);} }
+
+    /* ── NAV ── */
+    nav { position:fixed; top:0; left:0; right:0; z-index:900; height:var(--nav-h); display:flex; align-items:center; justify-content:space-between; padding:0 var(--pad); background:rgba(26,26,26,0.97); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); }
+    .nav-logo { height:calc(var(--nav-h) - 16px); width:auto; cursor:pointer; filter:invert(1); mix-blend-mode:screen; transition:opacity 0.25s; }
+    .nav-logo:hover { opacity:0.7; }
+    .nav-links { display:flex; align-items:center; gap:32px; list-style:none; }
+    .nav-links a { font-size:0.73rem; font-weight:400; letter-spacing:0.16em; text-transform:uppercase; color:var(--lgrey); position:relative; transition:color 0.25s; }
+    .nav-links a::after { content:''; position:absolute; left:0; bottom:-3px; width:0; height:1px; background:var(--red); transition:width 0.3s var(--ease); }
+    .nav-links a:hover, .nav-links a.active { color:var(--white); }
+    .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+    .nav-gallery-btn { padding:9px 22px !important; background:var(--red) !important; color:var(--white) !important; border-radius:40px; transition:background 0.25s !important; }
+    .nav-gallery-btn::after { display:none !important; }
+    .nav-gallery-btn:hover { background:var(--red-hover) !important; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:6px; }
+    .hamburger span { display:block; width:22px; height:1.5px; background:var(--white); transition:transform 0.3s var(--ease), opacity 0.3s; }
+    .hamburger.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity:0; }
+    .hamburger.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+    .mobile-menu { display:none; position:fixed; top:var(--nav-h); left:0; right:0; z-index:899; background:rgba(26,26,26,0.98); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); padding:20px var(--pad) 28px; flex-direction:column; gap:18px; animation:fadeUp 0.25s var(--ease); }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { font-size:0.82rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--lgrey); transition:color 0.2s; }
+    .mobile-menu a:hover { color:var(--white); }
+    .mobile-menu .mob-gal { display:inline-block; padding:11px 26px; background:var(--red); border-radius:40px; color:var(--white) !important; text-align:center; }
+
+    /* ── HOME ── */
+    #page-home { min-height:100vh; align-items:center; justify-content:center; text-align:center; position:relative; overflow:hidden; }
+    .home-glow { position:absolute; inset:0; pointer-events:none; background: radial-gradient(ellipse 55% 45% at 65% 35%, rgba(150,40,27,0.09) 0%, transparent 70%), radial-gradient(ellipse 40% 35% at 20% 75%, rgba(150,40,27,0.06) 0%, transparent 60%); }
+    .home-inner { position:relative; z-index:1; padding:0 var(--pad); }
+    .home-eyebrow { font-size:0.68rem; letter-spacing:0.32em; text-transform:uppercase; color:var(--red); margin-bottom:20px; animation:fadeUp 0.6s 0.1s var(--ease) both; }
+    .home-name { font-family:var(--font-d); font-size:clamp(4rem,9vw,8rem); font-weight:300; line-height:1.0; color:var(--white); margin-bottom:12px; animation:fadeUp 0.6s 0.2s var(--ease) both; }
+    .home-sub { font-size:0.8rem; font-weight:300; letter-spacing:0.38em; text-transform:uppercase; color:var(--grey); margin-bottom:56px; animation:fadeUp 0.6s 0.3s var(--ease) both; }
+    .home-cta { display:inline-block; padding:15px 46px; background:var(--red); color:var(--white); border-radius:50px; font-size:0.76rem; font-weight:400; letter-spacing:0.2em; text-transform:uppercase; transition:background 0.25s, transform 0.25s; animation:fadeUp 0.6s 0.4s var(--ease) both; }
+    .home-cta:hover { background:var(--red-hover); transform:translateY(-2px); }
+
+    /* ── INNER PAGE ── */
+    .inner-page { min-height:calc(100vh - var(--nav-h)); padding:calc(var(--nav-h) + 48px) var(--pad) 80px; }
+    #page-theorie .inner-page { display:flex; flex-direction:column; align-items:center; text-align:center; }
+    .s-label { font-size:0.64rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--red); margin-bottom:12px; }
+    .s-title { font-family:var(--font-d); font-size:clamp(2rem,4.5vw,3.8rem); font-weight:300; line-height:1.1; color:var(--white); }
+
+    /* ── GALLERY HEADER – left ── */
+    .gallery-header { text-align:left; margin-bottom:44px; }
+
+    /* ── CATEGORY TILES ── */
+    .gallery-grid { display:flex; flex-direction:column; gap:3px; max-width:1100px; margin:0 auto; }
+    .cat-tile { position:relative; height:68px; border-radius:10px; overflow:hidden; cursor:pointer; background:var(--surface); display:flex; flex-direction:row; align-items:center; transition:height 0.35s var(--ease), box-shadow 0.3s var(--ease); }
+    .cat-tile-bg { position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 0.5s var(--ease), transform 0.6s var(--ease); transform:scale(1.04); }
+    .cat-tile-bg::after { content:''; position:absolute; inset:0; background:rgba(10,10,10,0.72); }
+    @media (hover:hover) {
+      .cat-tile:hover { height:92px; box-shadow:0 8px 28px rgba(0,0,0,0.45); }
+      .cat-tile:hover .cat-tile-bg { opacity:1; transform:scale(1.0); }
+      .cat-tile:hover .cat-name { letter-spacing:0.03em; }
+      .cat-tile:hover .cat-tag { opacity:1; transform:translateX(0); }
+      .cat-tile:hover .cat-arrow { opacity:1; transform:translateX(0); border-color:rgba(237,232,226,0.5); }
+    }
+    .cat-tile-content { position:relative; z-index:1; width:100%; display:flex; align-items:center; justify-content:space-between; padding:0 24px; }
+    .cat-tile-left { display:flex; align-items:baseline; gap:18px; }
+    .cat-num { font-size:0.6rem; letter-spacing:0.22em; color:var(--red); min-width:20px; }
+    .cat-name { font-family:var(--font-d); font-size:clamp(1.2rem,2.2vw,1.7rem); font-weight:300; color:var(--white); transition:letter-spacing 0.3s var(--ease); }
+    .cat-tile-right { display:flex; align-items:center; gap:12px; }
+    .cat-tag { font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--grey); opacity:0; transform:translateX(8px); transition:opacity 0.3s 0.05s var(--ease), transform 0.3s 0.05s var(--ease); }
+    .cat-arrow { width:28px; height:28px; border:1px solid rgba(237,232,226,0.25); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.78rem; color:var(--white); opacity:0; transform:translateX(-6px); transition:opacity 0.28s var(--ease), transform 0.28s var(--ease), border-color 0.2s; }
+    @media (hover:none) { .cat-arrow { opacity:1; transform:none; border-color:rgba(237,232,226,0.2); } }
+    .cat-tile::before { content:''; position:absolute; bottom:0; left:24px; right:24px; height:1px; background:var(--border); }
+    .cat-tile:last-child::before { display:none; }
+
+    /* ── CATEGORY PAGE ── */
+    .back-btn { display:inline-flex; align-items:center; gap:9px; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--grey); cursor:pointer; margin-bottom:36px; transition:color 0.2s; }
+    .back-btn:hover { color:var(--white); }
+    .back-arrow { transition:transform 0.2s var(--ease); }
+    .back-btn:hover .back-arrow { transform:translateX(-4px); }
+    /* Category note/subtitle */
+    .cat-note { font-size:0.88rem; color:var(--lgrey); font-style:italic; margin-top:6px; margin-bottom:32px; max-width:720px; line-height:1.7; }
+
+    .empty-state { padding:60px 0; color:var(--grey); font-size:0.9rem; letter-spacing:0.1em; }
+    .empty-state span { display:block; font-family:var(--font-d); font-size:1.4rem; font-weight:300; color:var(--lgrey); margin-bottom:8px; }
+
+    /* ── WORKS GRID – masonry ── */
+    .works-grid { columns:3; column-gap:12px; max-width:1300px; margin:0 auto; }
+    .work-item { position:relative; break-inside:avoid; margin-bottom:12px; border-radius:10px; overflow:hidden; cursor:pointer; background:var(--surface); transition:transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+    .work-item:hover { transform:translateY(-3px); box-shadow:0 12px 32px rgba(0,0,0,0.4); }
+    .work-item img { display:block; width:100%; height:auto; filter:brightness(0.88); transition:filter 0.4s, transform 0.45s var(--ease); }
+    .work-item:hover img { filter:brightness(0.42); transform:scale(1.03); }
+    .work-overlay { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:16px 14px; transition:background 0.3s; }
+    .work-item:hover .work-overlay { background:rgba(26,26,26,0.55); }
+    .work-title { font-family:var(--font-d); font-size:1rem; font-weight:300; color:var(--white); margin-bottom:2px; opacity:0; transform:translateY(6px); transition:opacity 0.3s, transform 0.3s var(--ease); }
+    .work-size { font-size:0.66rem; letter-spacing:0.08em; color:var(--red); opacity:0; transform:translateY(6px); transition:opacity 0.3s 0.05s, transform 0.3s 0.05s var(--ease); }
+    .work-item:hover .work-title, .work-item:hover .work-size { opacity:1; transform:translateY(0); }
+
+    /* ── LIGHTBOX ── */
+    .lightbox { display:none; position:fixed; inset:0; z-index:1000; background:rgba(10,10,10,0.96); backdrop-filter:blur(6px); }
+    .lightbox.open { display:flex; animation:fadeUp 0.25s var(--ease); }
+    .lb-img-side { flex:1; display:flex; align-items:center; justify-content:center; padding:48px var(--pad); min-width:0; }
+    .lb-img-wrapper { width:100%; max-width:min(680px, calc(100vw - 360px - var(--pad) * 2)); display:flex; align-items:center; justify-content:center; }
+    .lb-img-wrapper img { display:block; width:100%; height:auto; max-height:calc(100vh - 96px); object-fit:contain; border-radius:6px; box-shadow:0 24px 64px rgba(0,0,0,0.6); }
+    .lb-info { width:340px; min-width:280px; padding:80px 32px 36px; border-left:1px solid var(--border); display:flex; flex-direction:column; overflow-y:auto; flex-shrink:0; }
+    .lb-cat { font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--red); margin-bottom:12px; }
+    .lb-title { font-family:var(--font-d); font-size:1.9rem; font-weight:300; line-height:1.15; color:var(--white); margin-bottom:18px; }
+    .lb-line { width:28px; height:1px; background:var(--red); margin-bottom:18px; }
+    .lb-desc { font-size:0.83rem; color:var(--lgrey); line-height:1.85; margin-bottom:22px; }
+    .lb-meta { display:flex; flex-direction:column; gap:7px; margin-bottom:20px; }
+    .lb-row { display:flex; gap:10px; font-size:0.74rem; }
+    .lb-lbl { color:var(--grey); min-width:68px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; font-size:0.68rem; }
+    .lb-val { color:var(--lgrey); }
+    .lb-extra-wrap { margin-top:8px; }
+    .lb-extra-toggle { display:flex; align-items:center; gap:8px; font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--red); cursor:pointer; padding:8px 0; border-top:1px solid var(--border); transition:color 0.2s; user-select:none; }
+    .lb-extra-toggle:hover { color:var(--red-hover); }
+    .lb-extra-toggle .toggle-icon { display:inline-block; font-size:0.8rem; transition:transform 0.3s var(--ease); }
+    .lb-extra-toggle.open .toggle-icon { transform:rotate(45deg); }
+    .lb-extra-body { display:none; font-size:0.8rem; font-style:italic; color:var(--lgrey); line-height:1.9; border-left:2px solid var(--red); padding:12px 0 4px 14px; margin-top:2px; animation:fadeUp 0.25s var(--ease); }
+    .lb-extra-body.open { display:block; }
+    .lb-nav { margin-top:auto; padding-top:28px; display:flex; gap:10px; }
+    .lb-nav button { flex:1; padding:11px; border:1px solid var(--border); color:var(--grey); font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; border-radius:6px; transition:border-color 0.2s, color 0.2s, background 0.2s; }
+    .lb-nav button:hover { border-color:var(--red); color:var(--white); background:rgba(150,40,27,0.12); }
+    .lb-close { position:absolute; top:22px; right:22px; width:38px; height:38px; border:1px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--grey); font-size:1rem; z-index:10; transition:border-color 0.2s, color 0.2s; }
+    .lb-close:hover { border-color:var(--red); color:var(--white); }
+
+    /* ── BIOGRAPHY – Desktop: 2 cols (left=portrait+timeline, right=text) ── */
+    .bio-grid {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:52px;
+      max-width:1300px; margin:0 auto;
+      align-items:start;
+    }
+    .bio-left { display:flex; flex-direction:column; gap:48px; }
+    .bio-portrait img { width:100%; height:auto; max-height:520px; object-fit:cover; border-radius:12px; filter:grayscale(15%); }
+    .bio-portrait-cap { margin-top:10px; font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--grey); }
+    .bio-name { font-family:var(--font-d); font-size:clamp(2.2rem,4vw,3.4rem); font-weight:300; line-height:1.1; color:var(--white); margin-bottom:28px; }
+    .bio-body { font-size:1rem; color:var(--lgrey); line-height:2.0; }
+    .bio-body p + p, .bio-body p + em, .bio-body em + p { margin-top:14px; }
+    .bio-body em { display:block; font-style:italic; color:var(--lgrey); opacity:0.85; }
+
+    /* ── Timeline ── */
+    .tl-section-title { font-family:var(--font-d); font-size:1.3rem; font-weight:300; color:var(--white); margin-bottom:20px; padding-bottom:10px; border-bottom:1px solid var(--border); position:relative; }
+    .tl-section-title::after { content:''; position:absolute; left:0; bottom:-1px; width:28px; height:1px; background:var(--red); }
+    .timeline { position:relative; padding-left:72px; margin-bottom:36px; }
+    .timeline::before { content:''; position:absolute; left:52px; top:10px; bottom:10px; width:1px; background:var(--border); }
+    .tl-item { position:relative; margin-bottom:28px; transition:transform 0.2s var(--ease); }
+    .tl-item:last-child { margin-bottom:0; }
+    .tl-item:hover { transform:translateX(3px); }
+    .tl-year { position:absolute; left:-72px; width:48px; text-align:right; font-family:var(--font-d); font-size:0.95rem; font-weight:300; color:var(--grey); padding-top:2px; }
+    .tl-dot { position:absolute; left:-23px; top:9px; width:8px; height:8px; border-radius:50%; background:var(--red); box-shadow:0 0 0 3px var(--bg); transition:box-shadow 0.2s, background 0.2s; }
+    .tl-item:hover .tl-dot { background:var(--red-hover); box-shadow:0 0 0 4px var(--bg), 0 0 14px rgba(150,40,27,0.4); }
+    .tl-places { font-size:0.84rem; color:var(--lgrey); line-height:1.7; }
+    /* Public works list */
+    .public-works { list-style:none; }
+    .public-works li { padding:10px 0; border-bottom:1px solid var(--border); }
+    .public-works li:last-child { border-bottom:none; }
+    .public-works .pw-title { font-family:var(--font-d); font-size:1.05rem; font-weight:300; color:var(--white); }
+    .public-works .pw-place { font-size:0.76rem; color:var(--grey); }
+
+    /* ── THEORETISCHES ── */
+    .theorie-text { max-width:720px; margin:0 auto; text-align:center; font-size:1rem; color:var(--lgrey); line-height:2.1; }
+    .theorie-text p + p { margin-top:18px; }
+
+    /* ── CONTACT ── */
+    .contact-wrap { display:flex; align-items:center; justify-content:center; min-height:calc(100vh - var(--nav-h) - 128px); }
+    .contact-box { text-align:center; max-width:520px; width:100%; }
+    .contact-title { font-family:var(--font-d); font-size:clamp(2.4rem,5vw,3.8rem); font-weight:300; line-height:1.1; color:var(--white); margin-bottom:16px; }
+    .contact-line { width:56px; height:1px; background:var(--red); margin:18px auto 28px; }
+    .contact-tagline { font-size:0.84rem; color:var(--grey); line-height:1.8; margin-bottom:48px; }
+    .contact-item { display:grid; grid-template-columns:44px 1fr; align-items:center; gap:16px; font-size:1.1rem; color:var(--grey); margin-bottom:18px; text-align:left; }
+    .contact-item a { color:inherit; text-decoration:none; }
+    .contact-item a.email-link { text-decoration:underline; }
+    .contact-item a.email-link:hover { color:var(--red); }
+    .contact-item:last-of-type { margin-bottom:44px; }
+    .contact-icon { width:44px; height:44px; font-size:1.1rem; display:inline-flex; align-items:center; justify-content:center; color:var(--grey); border:1px solid var(--grey); border-radius:14px; }
+    .contact-email { color:var(--grey); border-bottom:none; padding-bottom:0; margin-bottom:0; }
+    .contact-div { display:flex; align-items:center; gap:18px; margin-bottom:32px; }
+    .contact-div::before, .contact-div::after { content:''; flex:1; height:1px; background:var(--border); }
+    .contact-div span { font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--grey); }
+    .social-links { display:flex; justify-content:center; gap:14px; }
+    .soc { width:46px; height:46px; border:1px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--grey); transition:border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s; }
+    .soc:hover { border-color:var(--red); color:var(--white); background:rgba(150,40,27,0.12); transform:translateY(-2px); }
+    .soc svg { width:17px; height:17px; fill:currentColor; }
+
+    footer { border-top:1px solid var(--border); padding:24px var(--pad); display:flex; align-items:center; justify-content:space-between; font-size:0.7rem; color:var(--grey); letter-spacing:0.08em; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:900px) {
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+      .bio-grid { grid-template-columns:1fr; gap:36px; }
+      .works-grid { columns:2; column-gap:10px; }
+      .lb-info { width:280px; min-width:240px; padding:72px 24px 28px; }
+      .lb-img-wrapper { max-width:calc(100vw - 320px - var(--pad) * 2); }
+    }
+    @media (max-width:600px) {
+      .works-grid { columns:1; }
+      .cat-tile { height:58px !important; border-radius:8px; }
+      .cat-tile-content { padding:0 18px; }
+      .cat-name { font-size:1.15rem; }
+      .lightbox.open { flex-direction:column; overflow-y:auto; }
+      .lb-img-side { flex:none; width:100%; padding:calc(var(--nav-h) + 8px) 0 0; justify-content:flex-start; }
+      .lb-img-wrapper { max-width:100%; width:100%; }
+      .lb-img-wrapper img { width:100%; height:auto; max-height:none; border-radius:0; box-shadow:none; }
+      .lb-info { width:100%; min-width:unset; border-left:none; border-top:1px solid var(--border); padding:28px var(--pad) 40px; flex:none; }
+      .lb-nav { margin-top:28px; padding-top:0; }
+      .lb-close { top:14px; right:14px; }
+      .timeline { padding-left:60px; }
+      .timeline::before { left:40px; }
+      .tl-year { left:-60px; width:36px; font-size:0.82rem; }
+      footer { flex-direction:column; gap:6px; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <img class="nav-logo" src="Logo/Logo.png" alt="Cesare Kaiser" onclick="showPage('home')" />
+  <ul class="nav-links">
+    <li><a href="#" id="nl-bio"     onclick="showPage('bio');return false;">Biografie</a></li>
+    <li><a href="#" id="nl-theorie" onclick="showPage('theorie');return false;">Theoretisches</a></li>
+    <li><a href="#" id="nl-contact" onclick="showPage('contact');return false;">Kontakte</a></li>
+    <li><a href="#" id="nl-gallery" class="nav-gallery-btn" onclick="showPage('gallery');return false;">Gallerie</a></li>
+  </ul>
+  <div class="hamburger" id="hbg" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mob-menu">
+  <a href="#" onclick="showPage('bio');return false;">Biografie</a>
+  <a href="#" onclick="showPage('theorie');return false;">Theoretisches</a>
+  <a href="#" onclick="showPage('contact');return false;">Kontakte</a>
+  <a href="#" class="mob-gal" onclick="showPage('gallery');return false;">Gallerie</a>
+</div>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="home-glow"></div>
+  <div class="home-inner">
+    <p class="home-eyebrow">Bildende Kunst</p>
+    <h1 class="home-name">Cesare<br>Kaiser</h1>
+    <p class="home-sub">Künstler</p>
+    <a href="#" class="home-cta" onclick="showPage('gallery');return false;">Gallerie ansehen</a>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div id="page-gallery" class="page">
+  <div class="inner-page">
+    <div class="gallery-header">
+      <p class="s-label">Werkverzeichnis</p>
+      <h2 class="s-title">Gallerie</h2>
+    </div>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</div>
+
+<!-- CATEGORY -->
+<div id="page-category" class="page">
+  <div class="inner-page">
+    <div class="back-btn" onclick="showPage('gallery')"><span class="back-arrow">←</span> Zurück zur Übersicht</div>
+    <p class="s-label" id="cat-label">Kategorie</p>
+    <h2 class="s-title" id="cat-title" style="margin-bottom:8px;">–</h2>
+    <p class="cat-note" id="cat-note"></p>
+    <div class="works-grid" id="works-grid"></div>
+  </div>
+</div>
+
+<!-- BIOGRAPHY -->
+<div id="page-bio" class="page">
+  <div class="inner-page">
+    <div class="bio-grid">
+
+      <!-- LEFT: Portrait + Timeline -->
+      <div class="bio-left">
+        <div class="bio-portrait">
+          <img src="Front/Cesare.jpg" alt="Cesare Kaiser" />
+          <p class="bio-portrait-cap">Foto: © privat</p>
+        </div>
+
+        <!-- TIMELINE (moved under portrait) -->
+        <div>
+          <p class="s-label">Ausstellungen &amp; Werke</p>
+          <h3 class="s-title" style="font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:28px;">Cesare Christian Kaiser</h3>
+
+          <h4 class="tl-section-title" style="margin-bottom:20px;">Ausstellungen</h4>
+          <div class="timeline" id="timeline-ausstellungen"></div>
+
+          <h4 class="tl-section-title" style="margin-top:36px;margin-bottom:20px;">Werke im öffentlichen Raum</h4>
+          <ul class="public-works" id="public-works-list"></ul>
+        </div>
+      </div>
+
+      <!-- RIGHT: Flowing text -->
+      <div class="bio-text">
+        <p class="s-label">Biografie</p>
+        <h2 class="bio-name">Lebenslauf<br></h2>
+        <div class="bio-body">
+          <p>Cesare wurde 1964 in Hilden als Christian Kaiser geboren. Aufgewachsen in München fing er auch dort 1984 das Studium der evang. Theologie an und legte 1990 in München sein Examen ab. Von 1986 bis 1988 studierte er einige Semester in Tübingen. An beiden Studienorten bildete er sich auf künstlerischem Gebiet sowohl im praktischen wie auch theoretischen Bereich fort. In der Universität München arbeitete er im Bereich der christlichen Archäologie nebenamtlich mit. Es kam seinen Interessen sehr entgegen, dass hier Kunst und Theologie eine große gemeinsame Schnittmenge hatten. Während der nun folgenden Zeit als hauptberuflicher Pfarrer wurde die Verbindung zur künstlerischen Arbeit trotz einer regen Ausstellungstätigkeit oft übersehen. Jetzt verstellt der Beruf des Pfarrers oft den Blick auf den eigenständigen Künstler.</p>
+          <p>Dabei ist die Verbindung von Kunst und Theologie sehr eng: Sind doch die ältesten künstlerischen Darstellungen der Menschheit religiösen Ursprungs.</p>
+          <em>„Manches wird erst dann sichtbar, wenn es wieder neu gesehen wird. So geht es der Kunst nicht nur um die Wiedergabe des Vorfindlichen. Sondern sie will das Denken und Fühlen des Betrachters anstoßen, indem sie das ‚noch nicht' oder ‚nicht mehr' mit thematisiert. So gesehen hat die Arbeit des Künstlers große Nähe zur Arbeit des Theologen, nur dass dieser dafür die Begriffe Paradies oder Reich Gottes benutzt."</em>
+          <p>Cesares Bilder setzen dennoch kein religiöses Fachwissen voraus. Als Maler spielt der Künstler auch mit christlicher Philosophie, gibt aber jedem Betrachter seinen eigenen Raum. Ob dieser sich den Werken über das Sehen, das Fühlen oder auf der Verstandesebene nähert, bleibt jedem einzelnen überlassen.</p>
+          <p>Beispielsweise werden Toastbrote oder Hostien, Jeanshosen oder Zigarettenautomaten als Material verfremdet und im neuen Kontext wieder aufgebaut. Die Bilder und Objekte des Künstlers laden zu einer Auseinandersetzung ein, die den Betrachter immer tiefer in eine Gedankenwelt hineinzieht, ohne ihm etwas aufzwingen zu wollen.</p>
+          <p>Es werden Denkvorgänge angeschoben, ohne dass eine fertige Lösung angeboten wird. Dabei kann die Kunst alle Grenzen überschreiten: „Während sich das gesprochene Wort meistens nur an ein bestimmtes Publikum wenden kann, das über ähnliche Denkstrukturen, über den gleichen Bildungs- und Kulturhorizont verfügt, vermag das Bild auf verschiedenen Ebenen ansprechen, über alle Denk-, Kultur- und auch Sprachbarrieren hinweg."</p>
+          <p>Bei den Werken von Cesare steht oft der Untergrund im Dialog mit dem Motiv des Bildes, so dass sich im wahrsten Sinne des Wortes hintergründige Bedeutungen finden lassen. Der Künstler baut die Bildoberfläche meist streng geometrisch auf und lässt so Elemente des Kubismus in seine Bildsprache einfließen. Die oft darunter liegenden Collageteile stehen dazu in einem lebhaften Dialog.</p>
+          <p>In vergangenen Jahrzehnten entstanden durch die Übermalung, Collagierung und Verfremdung bestehender Bücher eine neue Form ganz persönlicher Bildertagebücher. Eine fortschreitende Körperbehinderung (MS) hat dazu geführt, dass dieses kleinteilige Projekt beendet wurde. Die neueren Werke sind meist sehr eigenwillige Collagen in größeren Formaten.</p>
+          <p><em>Cesare, 2023</em></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- THEORETISCHES -->
+<div id="page-theorie" class="page">
+  <div class="inner-page">
+    <p class="s-label">Theoretisches</p>
+    <h2 class="s-title" style="margin-bottom:40px;">Theoretisches</h2>
+    <div class="theorie-text">
+      <p>"Die ältesten künstlerischen Darstellungen der Menschheit sind religiösen Ursprungs. So liegt es für mich als Theologen nahe, hier Verbindungen zu schaffen. Bilder haben die Möglichkeit, Menschen in ihrer je eigenen lebensgeschichtlichen Situation anzusprechen und sie so sensibel zu machen für sich und ihre Umwelt, ohne dass die Freiheit des Betrachtenden eingeschränkt wird.</p>
+      <p>Dabei kann die Kunst alle Grenzen überschreiten: während sich das gesprochene Wort meistens nur an ein bestimmtes Publikum wenden kann, das über ähnliche Denkstrukturen, über den gleichen Bildungs- und Kulturhorizont verfügt, vermag das Bild auf verschiedenen Ebenen ansprechen, über alle Denk-, Kultur- und auch Sprachbarrieren hinweg. Das Bild macht so zwar subjektivere Aussagen als das gesprochene Wort, kann aber gerade dadurch von dem Betrachter in seinem ihm eigenen Lebenshorizont oft in tiefere Bewusstseinsschichten aufgenommen werden - es regt zum meditativen Verweilen an. Kunst gibt dem Betrachter genau die Zeit, die er zur Aufnahme des benötigt. Kunstwerke, auf die sich der Betrachter einläßt, regen somit zu einer eigenen, inneren Diskussion an, fordern zur Überprüfung und Korrektur der eigenen (An)sicht auf, lassen eigenen Gedanken bei der Bildbetrachtung freien Raum.</p>
+      <p>Bilder haben das Interesse, das Innere des Menschen zu treffen, dieses Interesse teilen sie mit der Theologie, sofern sich die Theologie nicht als eine rein abstrakte Theorievermittlung verstehen will. Auf diesem Horizont ist die Verbindung von künstlerischer und theologischer Arbeit verständlich. Allzu lange gab es die protestantische intellektuelle Engführung, die sich so beschreiben lässt: In der katholischen Kirche sollen Bilder überwältigen, in der evangelischen Kirche sollen Bilder überzeugen. Für mich ist eine reizvolle Aufgabe, die Kraft und Weite, die Kunst vermitteln kann, mit meiner theologischen Arbeit zu verbinden. Denn manches wird erst dann sichtbar, wenn es wieder neu gesehen wird. So geht es der Kunst nicht nur um die Wiedergabe des Vorfindlichen. Sondern sie will das Denken und Fühlen des Betrachters anstoßen, indem sie das "noch nicht" oder "nicht mehr" mit thematisiert. So gesehen hat die Arbeit des Künstlers große Nähe zur Arbeit des Theologen, nur dass dieser dafür die Begriffe Paradies oder Reich Gottes benutzt. So sollen meine Bilder Anstoß sein für das Denken und Fühlen des Betrachters. Es kann sich dann eine Begegnung ereignen, die Metapher für die Begegnung mit Gott ist: Ein Kunstwerk kann den ganzen Menschen ergreifen, ohne dass es selbst vollständig vom Betrachter ergriffen werden kann, denn es bleibt immer noch etwas, was sich der vollständigen Aufschlüsselung entzieht und so zur weiteren Beschäftigung anregt.</p>
+      <p>Cesare, 2019</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="page-contact" class="page">
+  <div class="inner-page">
+    <div class="contact-wrap">
+      <div class="contact-box">
+        <p class="s-label" style="margin-bottom:10px;">Kontakt</p>
+        <h2 class="contact-title">Kontaktdaten</h2>
+        <div class="contact-line"></div>
+        <p class="contact-tagline"></p>
+        <p class="contact-item"><span class="contact-icon">📍</span>Am Kreuzstein 2, 91126 Schwabach</p><br>
+        <p class="contact-item"><span class="contact-icon">📞</span><a href="tel:+4991261886311">09126/1886311</a></p><br>
+        <p class="contact-item"><span class="contact-icon">✉️</span><a href="mailto:selber@cesare-kaiser.de" class="email-link">selber@cesare-kaiser.de</a></p><br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <div class="lb-img-side">
+    <div class="lb-img-wrapper"><img id="lb-img" src="" alt="" /></div>
+  </div>
+  <div class="lb-info">
+    <p class="lb-cat" id="lb-cat"></p>
+    <h2 class="lb-title" id="lb-title"></h2>
+    <div class="lb-line"></div>
+    <p class="lb-desc" id="lb-desc"></p>
+    <div class="lb-meta" id="lb-meta"></div>
+    <div class="lb-extra-wrap" id="lb-extra-wrap" style="display:none;">
+      <div class="lb-extra-toggle" id="lb-extra-toggle" onclick="toggleExtra()">
+        <span class="toggle-icon">+</span>
+        <span>Begleittext lesen</span>
+      </div>
+      <div class="lb-extra-body" id="lb-extra-body"></div>
+    </div>
+    <div class="lb-nav">
+      <button onclick="lbNav(-1)">← Vorheriges</button>
+      <button onclick="lbNav(1)">Nächstes →</button>
+    </div>
+  </div>
+</div>
+
+<footer><span>© 2024 Cesare Kaiser</span><span>Alle Rechte vorbehalten</span></footer>
+
+<script>
+// ── CATEGORIES ────────────────────────────────────────────────────────────────
+// note: optionale kurze Notiz/Unterüberschrift unter dem Kategorietitel
+const CATS = [
+  {id:'aktuelle-ideen', name:'Aktuelle Ideen',   folder:'AktuelleIdeen',  note:''},
+  {id:'ich-serie',      name:'Ich-Serie',         folder:'IchSerie',        note:'Collagen bilden eine siebenteilige Serie (jeweils 74 x 109 cm). Sie ist entstanden aufgrund der persönlichen Erfahrung einer Scheidung, die zu einer intensiven Beschäftigung mit dem eigenen Ich geführt hat. Auf verschiedenste Weisen wird die kubistische Fläche mit den Buchstaben ICH mit dem Selbstportrait in Beziehung gesetzt. Während das Bild „ICH in den Köpfen“ nur noch ein Selbstportrait zeigt, das sich aus zahlreichen Köpfen zusammensetzt, ist bei „ICH bin fast weg“ das Portrait nur noch bei Dunkelheit als phosphorisierendes Nachbild zu erkennen.'},
+  {id:'ideen-formen',   name:'Ideen und Formen',  folder:'IdeenUndFormen',  note:''},
+  {id:'formsuche',      name:'Formsuche',         folder:'Formsuche',       note:''},
+  {id:'objekte',        name:'Objekte',           folder:'Objekte',         note:''},
+  {id:'bilder-bibel',   name:'Bilder zur Bibel',  folder:'BilderZurBibel',  note:'Größe (aller) Bilder: 18 cm x 14 cm '},
+  {id:'johannesprolog', name:'Johannesprolog',    folder:'Johannesprolog',  note:'Sieben Collagen (100 x 100 cm) setzen die ersten Verse des Johannesevangeliums um:'},
+  {id:'oeffentliches',  name:'Öffentliches',      folder:'Oeffentliches',   note:''},
+  {id:'rumpelkammer',   name:'Rumpelkammer',      folder:'Rumpelkammer',    note:''},
+];
+
+// ── WORKS – geladen aus data/works.json (oder inline als Fallback) ─────────────
+// Hinweis: Die Datei data/works.json wird beim Laden der Seite gefetched.
+// Wenn sie vorhanden ist, überschreibt sie diese Inline-Daten.
+// Um Bilder hinzuzufügen: data/works.json bearbeiten (→ Netlify CMS oder GitHub).
+
+let WORKS = {};  // wird aus JSON geladen (oder Fallback unten)
+
+// ── Ausstellungs-Daten ────────────────────────────────────────────────────────
+const AUSSTELLUNGEN = [
+  {year:'1993', places:'Eichenau · München, St. Lukas · Zachow/Mecklenburg · Garching'},
+  {year:'1994', places:'Königsbrunn'},
+  {year:'1995', places:'Gräfelfing · Memmingen'},
+  {year:'1996', places:'Inzell · Grafrath'},
+  {year:'1997', places:'Großhadern · Altenberg'},
+  {year:'1999', places:'Kleinhadern'},
+  {year:'2001', places:'Augsburg · Bayreuth'},
+  {year:'2002', places:'Berg am Laim'},
+  {year:'2003', places:'München-Neuhausen · Erding Flughafen'},
+  {year:'2004', places:'München-Innenstadt'},
+  {year:'2005', places:'Riem'},
+  {year:'2006', places:'Rostock'},
+  {year:'2007', places:'Sternberg / Mecklenburg'},
+  {year:'2008', places:'Haar bei München'},
+  {year:'2012', places:'Dachau'},
+  {year:'2014', places:'Ottobrunn'},
+  {year:'2016', places:'Eichenau'},
+  {year:'2018', places:'München Flughafen'},
+  {year:'2019', places:'Nürtingen'},
+  {year:'2022', places:'Schwabach'},
+  {year:'2023', places:'Mohr-Villa München'},
+];
+const PUBLIC_WORKS = [
+  {title:'Meditationsbild', place:'Diakonisches Werk Memmingen'},
+  {title:'Altarfries',      place:'Versöhnungskirche Memmingen'},
+  {title:'Kruzifix',        place:'Christuskirche Bayreuth'},
+];
+
+// ── INIT: works.json laden ────────────────────────────────────────────────────
+async function loadWorks() {
+  try {
+    const r = await fetch('data/works.json');
+    if (r.ok) WORKS = await r.json();
+  } catch (e) {
+    // Fallback: WORKS bleibt leer – Kategorien zeigen "Noch leer"
+    // Trage hier deine Werke inline ein falls du kein data/works.json nutzt
+    console.info('data/works.json nicht gefunden – nutze Inline-Daten falls vorhanden.');
+  }
+  renderGallery();
+  renderTimeline();
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function renderGallery() {
+  document.getElementById('gallery-grid').innerHTML = CATS.map((c,i) => {
+    const preview = WORKS[c.id] && WORKS[c.id].length > 0
+      ? `style="background-image:url('${WORKS[c.id][0].img}')"`
+      : '';
+    return `
+    <div class="cat-tile" onclick="openCat('${c.id}','${c.name}','${c.note || ''}')">
+      <div class="cat-tile-bg" ${preview}></div>
+      <div class="cat-tile-content">
+        <div class="cat-tile-left">
+          <span class="cat-num">0${i+1}</span>
+          <span class="cat-name">${c.name}</span>
+        </div>
+        <div class="cat-tile-right">
+          <span class="cat-tag">Werke ansehen</span>
+          <div class="cat-arrow">→</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderTimeline() {
+  document.getElementById('timeline-ausstellungen').innerHTML = AUSSTELLUNGEN.map(e=>`
+    <div class="tl-item">
+      <span class="tl-year">${e.year}</span>
+      <div class="tl-dot"></div>
+      <div class="tl-places">${e.places}</div>
+    </div>`).join('');
+  document.getElementById('public-works-list').innerHTML = PUBLIC_WORKS.map(w=>`
+    <li>
+      <div class="pw-title">${w.title}</div>
+      <div class="pw-place">${w.place}</div>
+    </li>`).join('');
+}
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const pg=document.getElementById('page-'+id);
+  if(pg) pg.classList.add('active');
+  ['bio','theorie','contact','gallery'].forEach(n=>{
+    const el=document.getElementById('nl-'+n);
+    if(el) el.classList.remove('active');
+  });
+  const a=document.getElementById('nl-'+id);
+  if(a) a.classList.add('active');
+  closeMobileMenu();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleMenu(){ document.getElementById('hbg').classList.toggle('open'); document.getElementById('mob-menu').classList.toggle('open'); }
+function closeMobileMenu(){ document.getElementById('hbg').classList.remove('open'); document.getElementById('mob-menu').classList.remove('open'); }
+
+let currentWorks=[],currentCatName='',currentIdx=0;
+function openCat(id,name,note) {
+  document.getElementById('cat-label').textContent='Kategorie';
+  document.getElementById('cat-title').textContent=name;
+  const noteEl=document.getElementById('cat-note');
+  noteEl.textContent=note||'';
+  noteEl.style.display=note?'block':'none';
+
+  currentCatName=name;
+  currentWorks = WORKS[id] || [];
+  const grid = document.getElementById('works-grid');
+  if (currentWorks.length === 0) {
+    grid.innerHTML=`<div class="empty-state"><span>Noch leer …</span>Diese Kategorie wird bald mit Werken befüllt.</div>`;
+  } else {
+    grid.innerHTML=currentWorks.map((w,i)=>`
+      <div class="work-item" onclick="openLb(${i})">
+        <img src="${w.img}" alt="${w.title}" loading="lazy"/>
+        <div class="work-overlay">
+          <div class="work-title">${w.title}</div>
+          <div class="work-size">${w.size}</div>
+        </div>
+      </div>`).join('');
+  }
+  showPage('category');
+}
+
+function openLb(i) {
+  if (!currentWorks.length) return;
+  currentIdx=i; renderLb();
+  const lb=document.getElementById('lightbox');
+  lb.classList.add('open'); lb.scrollTop=0;
+  document.body.style.overflow='hidden';
+}
+function closeLb(){ document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow=''; }
+function lbNav(dir) {
+  currentIdx=(currentIdx+dir+currentWorks.length)%currentWorks.length;
+  renderLb();
+  document.getElementById('lightbox').scrollTop=0;
+}
+function renderLb() {
+  const w=currentWorks[currentIdx];
+  document.getElementById('lb-img').src=w.img;
+  document.getElementById('lb-img').alt=w.title;
+  document.getElementById('lb-cat').textContent=currentCatName;
+  document.getElementById('lb-title').textContent=w.title;
+  document.getElementById('lb-desc').textContent=w.desc;
+  document.getElementById('lb-meta').innerHTML=`
+    <div class="lb-row"><span class="lb-lbl">Maße</span><span class="lb-val">${w.size}</span></div>`;
+  const wrap=document.getElementById('lb-extra-wrap');
+  const body=document.getElementById('lb-extra-body');
+  const toggle=document.getElementById('lb-extra-toggle');
+  if(w.extra) {
+    body.textContent=w.extra;
+    body.classList.remove('open');
+    toggle.classList.remove('open');
+    wrap.style.display='block';
+  } else { wrap.style.display='none'; }
+}
+function toggleExtra() {
+  document.getElementById('lb-extra-body').classList.toggle('open');
+  document.getElementById('lb-extra-toggle').classList.toggle('open');
+}
+
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('lightbox').classList.contains('open')) return;
+  if(e.key==='ArrowRight') lbNav(1);
+  if(e.key==='ArrowLeft')  lbNav(-1);
+  if(e.key==='Escape') closeLb();
+});
+document.getElementById('lightbox').addEventListener('click',e=>{
+  if(e.target===document.getElementById('lightbox')) closeLb();
+});
+
+loadWorks();
+</script>
+</body>
+</html>

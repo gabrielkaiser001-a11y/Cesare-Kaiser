@@ -1,0 +1,58 @@
+backend:
+  name: github
+  repo: DEIN_GITHUB_USERNAME/cesare-kaiser  # <-- hier anpassen!
+  branch: main
+
+# Medien (Bilder) landen im Front/-Ordner
+media_folder: "Front"
+public_folder: "/Front"
+
+collections:
+  - name: "werke"
+    label: "Werke (alle Kategorien)"
+    files:
+      - label: "Alle Werke"
+        name: "works"
+        file: "data/works.json"
+        fields:
+          - label: "Aktuelle Ideen"
+            name: "aktuelle-ideen"
+            widget: "list"
+            fields: &werkfelder
+              - {label: "Titel", name: "title", widget: "string"}
+              - {label: "Bild (Pfad z.B. Front/AktuelleIdeen/8.jpg)", name: "img", widget: "string"}
+              - {label: "Beschreibung", name: "desc", widget: "text", required: false}
+              - {label: "Maße", name: "size", widget: "string", required: false}
+              - {label: "Begleittext (ausklappbar, optional)", name: "extra", widget: "text", required: false}
+          - label: "Ich-Serie"
+            name: "ich-serie"
+            widget: "list"
+            fields: *werkfelder
+          - label: "Ideen und Formen"
+            name: "ideen-formen"
+            widget: "list"
+            fields: *werkfelder
+          - label: "Formsuche"
+            name: "formsuche"
+            widget: "list"
+            fields: *werkfelder
+          - label: "Objekte"
+            name: "objekte"
+            widget: "list"
+            fields: *werkfelder
+          - label: "Bilder zur Bibel"
+            name: "bilder-bibel"
+            widget: "list"
+            fields: *werkfelder
+          - label: "Johannesprolog"
+            name: "johannesprolog"
+            widget: "list"
+            fields: *werkfelder
+          - label: "Öffentliches"
+            name: "oeffentliches"
+            widget: "list"
+            fields: *werkfelder
+          - label: "Rumpelkammer"
+            name: "rumpelkammer"
+            widget: "list"
+            fields: *werkfelder
