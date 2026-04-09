@@ -16,7 +16,7 @@
       --red-hover: #b03222;
       --white:     #ede8e2;
       --grey:      #7a7a7a;
-      --lgrey:     #aaa;
+      --lgrey:     #aaaaaa;
       --font-d:    "Cormorant Garamond", serif;
       --font-b:    "Jost", sans-serif;
       --nav-h:     72px;
@@ -75,7 +75,7 @@
     .s-title { font-family:var(--font-d); font-size:clamp(2rem,4.5vw,3.8rem); font-weight:300; line-height:1.1; color:var(--white); }
 
     /* ── GALLERY HEADER – left ── */
-    .gallery-header { text-align:left; margin-bottom:44px; }
+    .gallery-header { text-align:left; margin:0 auto 44px; width:100%; max-width:1100px; }
 
     /* ── CATEGORY TILES ── */
     .gallery-grid { display:flex; flex-direction:column; gap:3px; max-width:1100px; margin:0 auto; }
@@ -105,7 +105,9 @@
     .back-btn:hover { color:var(--white); }
     .back-arrow { transition:transform 0.2s var(--ease); }
     .back-btn:hover .back-arrow { transform:translateX(-4px); }
-    /* Category note/subtitle */
+    #page-category .s-label,
+    #page-category .s-title,
+    #page-category .cat-note { width:100%; max-width:1300px; margin-left:auto; margin-right:auto; }
     .cat-note { font-size:0.88rem; color:var(--lgrey); font-style:italic; margin-top:6px; margin-bottom:32px; max-width:720px; line-height:1.7; }
 
     .empty-state { padding:60px 0; color:var(--grey); font-size:0.9rem; letter-spacing:0.1em; }
@@ -151,6 +153,18 @@
     .lb-close { position:absolute; top:22px; right:22px; width:38px; height:38px; border:1px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--grey); font-size:1rem; z-index:10; transition:border-color 0.2s, color 0.2s; }
     .lb-close:hover { border-color:var(--red); color:var(--white); }
 
+    /* ── EXTRA TEXT MODAL ── */
+    .extra-modal { display:none; position:fixed; inset:0; z-index:1100; background:rgba(10,10,10,0.98); backdrop-filter:blur(8px); animation:fadeUp 0.3s var(--ease); }
+    .extra-modal.open { display:flex; align-items:center; justify-content:center; padding:var(--pad); }
+    .extra-modal-content { background:var(--surface); border-radius:12px; border:1px solid var(--border); max-width:800px; width:100%; max-height:85vh; overflow-y:auto; padding:48px 52px; position:relative; box-shadow:0 32px 96px rgba(0,0,0,0.8); }
+    .extra-modal-close { position:absolute; top:20px; right:20px; width:36px; height:36px; border:1px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--grey); font-size:1rem; cursor:pointer; z-index:10; transition:border-color 0.2s, color 0.2s; background:var(--bg); }
+    .extra-modal-close:hover { border-color:var(--red); color:var(--white); }
+    .extra-modal h3 { font-family:var(--font-d); font-size:1.6rem; font-weight:300; color:var(--white); margin-bottom:24px; line-height:1.2; }
+    .extra-modal p { font-size:0.95rem; color:var(--lgrey); line-height:2.0; margin-bottom:16px; }
+    .extra-modal p:last-child { margin-bottom:0; }
+    .extra-modal em { font-style:italic; }
+    .extra-modal strong { font-weight:400; }
+
     /* ── BIOGRAPHY – Desktop: 2 cols (left=portrait+timeline, right=text) ── */
     .bio-grid {
       display:grid;
@@ -160,6 +174,8 @@
       align-items:start;
     }
     .bio-left { display:flex; flex-direction:column; gap:48px; }
+    .bio-portrait.mobile-only { display:none; }
+    .bio-text { grid-column:2; grid-row:1; }
     .bio-portrait img { width:100%; height:auto; max-height:520px; object-fit:cover; border-radius:12px; filter:grayscale(15%); }
     .bio-portrait-cap { margin-top:10px; font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--grey); }
     .bio-name { font-family:var(--font-d); font-size:clamp(2.2rem,4vw,3.4rem); font-weight:300; line-height:1.1; color:var(--white); margin-bottom:28px; }
@@ -201,7 +217,8 @@
     .contact-item a.email-link { text-decoration:underline; }
     .contact-item a.email-link:hover { color:var(--red); }
     .contact-item:last-of-type { margin-bottom:44px; }
-    .contact-icon { width:44px; height:44px; font-size:1.1rem; display:inline-flex; align-items:center; justify-content:center; color:var(--grey); border:1px solid var(--grey); border-radius:14px; }
+    .contact-icon { width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--grey); border-radius:14px; overflow:hidden; background:var(--bg); box-sizing:border-box; padding:6px; }
+    .contact-icon img { width:100%; height:100%; object-fit:contain; display:block; }
     .contact-email { color:var(--grey); border-bottom:none; padding-bottom:0; margin-bottom:0; }
     .contact-div { display:flex; align-items:center; gap:18px; margin-bottom:32px; }
     .contact-div::before, .contact-div::after { content:''; flex:1; height:1px; background:var(--border); }
@@ -218,6 +235,10 @@
       .nav-links { display:none; }
       .hamburger { display:flex; }
       .bio-grid { grid-template-columns:1fr; gap:36px; }
+      .bio-text { grid-column:auto; grid-row:1; }
+      .bio-left { grid-column:auto; grid-row:2; }
+      .bio-left .bio-portrait { display:none; }
+      .bio-portrait.mobile-only { display:block; }
       .works-grid { columns:2; column-gap:10px; }
       .lb-info { width:280px; min-width:240px; padding:72px 24px 28px; }
       .lb-img-wrapper { max-width:calc(100vw - 320px - var(--pad) * 2); }
@@ -264,7 +285,7 @@
 <div id="page-home" class="page active">
   <div class="home-glow"></div>
   <div class="home-inner">
-    <p class="home-eyebrow">Bildende Kunst</p>
+    <p class="home-eyebrow"></p>
     <h1 class="home-name">Cesare<br>Kaiser</h1>
     <p class="home-sub">Künstler</p>
     <a href="#" class="home-cta" onclick="showPage('gallery');return false;">Gallerie ansehen</a>
@@ -275,7 +296,7 @@
 <div id="page-gallery" class="page">
   <div class="inner-page">
     <div class="gallery-header">
-      <p class="s-label">Werkverzeichnis</p>
+      <p class="s-label">Cesare Kaiser</p>
       <h2 class="s-title">Gallerie</h2>
     </div>
     <div class="gallery-grid" id="gallery-grid"></div>
@@ -307,21 +328,19 @@
 
         <!-- TIMELINE (moved under portrait) -->
         <div>
-          <p class="s-label">Ausstellungen &amp; Werke</p>
-          <h3 class="s-title" style="font-size:clamp(1.5rem,3vw,2.2rem);margin-bottom:28px;">Cesare Christian Kaiser</h3>
-
-          <h4 class="tl-section-title" style="margin-bottom:20px;">Ausstellungen</h4>
+          <h4 class="tl-section-title" style="margin-bottom:20px;">Ausstellungen</h4><br>
           <div class="timeline" id="timeline-ausstellungen"></div>
-
-          <h4 class="tl-section-title" style="margin-top:36px;margin-bottom:20px;">Werke im öffentlichen Raum</h4>
-          <ul class="public-works" id="public-works-list"></ul>
         </div>
       </div>
 
       <!-- RIGHT: Flowing text -->
       <div class="bio-text">
-        <p class="s-label">Biografie</p>
-        <h2 class="bio-name">Lebenslauf<br></h2>
+        <p class="s-label">Cesare</p>
+        <h2 class="bio-name">Christian Kaiser<br></h2>
+        <div class="bio-portrait mobile-only">
+          <img src="Front2/Cesare.jpg" alt="Cesare Kaiser" />
+          <p class="bio-portrait-cap">Foto: © privat</p>
+        </div>
         <div class="bio-body">
           <p>Cesare wurde 1964 in Hilden als Christian Kaiser geboren. Aufgewachsen in München fing er auch dort 1984 das Studium der evang. Theologie an und legte 1990 in München sein Examen ab. Von 1986 bis 1988 studierte er einige Semester in Tübingen. An beiden Studienorten bildete er sich auf künstlerischem Gebiet sowohl im praktischen wie auch theoretischen Bereich fort. In der Universität München arbeitete er im Bereich der christlichen Archäologie nebenamtlich mit. Es kam seinen Interessen sehr entgegen, dass hier Kunst und Theologie eine große gemeinsame Schnittmenge hatten. Während der nun folgenden Zeit als hauptberuflicher Pfarrer wurde die Verbindung zur künstlerischen Arbeit trotz einer regen Ausstellungstätigkeit oft übersehen. Jetzt verstellt der Beruf des Pfarrers oft den Blick auf den eigenständigen Künstler.</p>
           <p>Dabei ist die Verbindung von Kunst und Theologie sehr eng: Sind doch die ältesten künstlerischen Darstellungen der Menschheit religiösen Ursprungs.</p>
@@ -332,6 +351,8 @@
           <p>Bei den Werken von Cesare steht oft der Untergrund im Dialog mit dem Motiv des Bildes, so dass sich im wahrsten Sinne des Wortes hintergründige Bedeutungen finden lassen. Der Künstler baut die Bildoberfläche meist streng geometrisch auf und lässt so Elemente des Kubismus in seine Bildsprache einfließen. Die oft darunter liegenden Collageteile stehen dazu in einem lebhaften Dialog.</p>
           <p>In vergangenen Jahrzehnten entstanden durch die Übermalung, Collagierung und Verfremdung bestehender Bücher eine neue Form ganz persönlicher Bildertagebücher. Eine fortschreitende Körperbehinderung (MS) hat dazu geführt, dass dieses kleinteilige Projekt beendet wurde. Die neueren Werke sind meist sehr eigenwillige Collagen in größeren Formaten.</p>
           <p><em>Cesare, 2023</em></p>
+          <h4 class="tl-section-title" style="margin-top:36px;margin-bottom:20px;">Werke im öffentlichen Raum</h4>
+          <ul class="public-works" id="public-works-list"></ul>
         </div>
       </div>
 
@@ -342,7 +363,7 @@
 <!-- THEORETISCHES -->
 <div id="page-theorie" class="page">
   <div class="inner-page">
-    <p class="s-label">Theoretisches</p>
+    <p class="s-label">Cesare Kaiser</p>
     <h2 class="s-title" style="margin-bottom:40px;">Theoretisches</h2>
     <div class="theorie-text">
       <p>"Die ältesten künstlerischen Darstellungen der Menschheit sind religiösen Ursprungs. So liegt es für mich als Theologen nahe, hier Verbindungen zu schaffen. Bilder haben die Möglichkeit, Menschen in ihrer je eigenen lebensgeschichtlichen Situation anzusprechen und sie so sensibel zu machen für sich und ihre Umwelt, ohne dass die Freiheit des Betrachtenden eingeschränkt wird.</p>
@@ -358,13 +379,13 @@
   <div class="inner-page">
     <div class="contact-wrap">
       <div class="contact-box">
-        <p class="s-label" style="margin-bottom:10px;">Kontakt</p>
+        <p class="s-label" style="margin-bottom:10px;">Cesare Kaiser</p>
         <h2 class="contact-title">Kontaktdaten</h2>
         <div class="contact-line"></div>
         <p class="contact-tagline"></p>
-        <p class="contact-item"><span class="contact-icon">📍</span>Am Kreuzstein 2, 91126 Schwabach</p><br>
-        <p class="contact-item"><span class="contact-icon">📞</span><a href="tel:+4991261886311">09126/1886311</a></p><br>
-        <p class="contact-item"><span class="contact-icon">✉️</span><a href="mailto:selber@cesare-kaiser.de" class="email-link">selber@cesare-kaiser.de</a></p><br>
+        <p class="contact-item"><span class="contact-icon"><img src="Front2/Pin.png" alt="Adresse"></span>Am Kreuzstein 2, 91126 Schwabach</p><br>
+        <p class="contact-item"><span class="contact-icon"><img src="Front2/Telefon.png" alt="Telefon"></span><a href="tel:+4991261886311">09126/1886311</a></p><br>
+        <p class="contact-item"><span class="contact-icon"><img src="Front2/Brief.png" alt="E-Mail"></span><a href="mailto:selber@cesare-kaiser.de" class="email-link">selber@cesare-kaiser.de</a></p><br>
         </div>
       </div>
     </div>
@@ -397,7 +418,14 @@
   </div>
 </div>
 
-<footer><span>© 2024 Cesare Kaiser</span><span>Alle Rechte vorbehalten</span></footer>
+<footer><span>© 2026 Cesare Kaiser</span><span>Alle Rechte vorbehalten</span></footer>
+
+<!-- EXTRA TEXT MODAL -->
+<div class="extra-modal" id="extra-modal">
+  <div class="extra-modal-content" id="extra-modal-content">
+    <button class="extra-modal-close" onclick="closeExtraModal()">✕</button>
+  </div>
+</div>
 
 <script>
 // ── CATEGORIES ────────────────────────────────────────────────────────────────
@@ -439,7 +467,7 @@ const WORKS = {
       "img": "AktuelleIdeen/3.jpg",
       "desc": "Beschreibung zu diesem Werk.",
       "size": "32 x 30 cm",
-      "extra": "Hier steht ein Fliesstext, der Text kann ein Bibelvers oder eine gründlichere Beschreibung sein."
+      "extra": ""
     },
     {
       "title": "Es kommt ans Licht",
@@ -534,7 +562,7 @@ const WORKS = {
       "img": "IdeenUndFormen/2.jpg",
       "desc": "Collage.",
       "size": "2× 60 x 91 cm; 120 x 120 cm",
-      "extra": null
+      "extra": "Liebe Gemeinde! Heute möchte ich mit Ihnen bei Adam und Eva anfangen. Denn der Titel dieses Bildes dort lautet: „Adam und Eva – Triptychon". Nun hat sich seit den Tagen von Adam und Eva manches geändert, gerade in dem Verhältnis der Nachkommen von Adam und Eva, der Männer und Frauen: Besonders in unserer Kirche, hat sich hier einiges getan. Es gibt nun nicht nur Pfarrer, sondern auch Pfarrerinnen. Aber manches ist noch wie zu Zeiten Adam und Evas. Von da her ist es ganz reizvoll, den einzigen Text der Bibel einmal näher zu beleuchten, in der eine Frau die Hauptrolle hat, die ihr die Männerwelt über die Jahrhunderte hinweg neidlos überlassen hat. Sie kennen die Geschichte vom Anfang der Bibel: Im Paradies werden Adam und Eva von einer Schlange überredet, von einer verbotenen Frucht zu essen. Von Gott zur Rede gestellt, verweist Adam auf Eva, die ihn zu der Missetat angestiftet habe. Die gibt die Schuld weiter an die Schlange und schließlich an deren Schöpfer, also an Gott selber. Diese Geschichte will keine historische Begebenheit wiedergeben, sondern in der Sprache des Mythos wird erzählt, was immer wieder geschieht und geschehen wird. Immer wieder läuft derselbe Film ab. „Jenseits von Eden" ist ein Programm in der millionsten Spielwoche. Nur die Rollen werden gelegentlich gewechselt. Der Zweiteiler „Jenseits von Eden" ist aber immer derselbe und damit zeitlos modern: Teil 1: „Sollte Gott gesagt haben..." oder: „Man wird ja noch fragen dürfen!“ Regie: Die Schlange. Schauen wir uns diese Szene einmal genauer an: Der Verführer erscheint auf der Bildfläche. Die Schlange hat ihren Auftritt. Sie stellt sich vor. Bemerkenswert, wie sie das tut: Sie sagt nicht: „Gestatten Sie bitte, ich möchte Sie zum Bösen verführen!“. Wäre sie so plump, wären wir heute noch diesseits von Eden, denn wer will schon bewusst etwas Böses tun? Viel schlauer geht sie zur Sache: „Gnädige Frau, ich möchte mit ihnen über Religion plaudern. Ja, sollte Gott gesagt haben?“ Das ist seriös und vertrauenswürdig. Die Schlange bittet zur Bibelarbeit. Sie möchte ein theologisches Gespräch über das Wort Gottes führen. „Sollte Gott gesagt haben…“ Hier geht es um das Gottesbild. Da sind wir uns auch oft nicht ganz sicher: „Sollte Gott gesagt haben…“ Auch wir haben ja oft eine solche Verunsicherung hinter uns: In unserem Kinderglauben war es noch der liebe Gott, der alles sieht und hört. Später dann wird er eher zum älteren Mann, der schon mal fünfe gerade sein lässt. „Der liebe Gott kann sich schließlich nicht um alles kümmern und wird schon nicht so streng sein und kleine Sünden bestraft er sofort oder aber meistens gar nicht.“ Bei der Bezeichnung Gottes als Vater steht dann meist ein Bild vor Augen, das einen älteren Herrn mit Bart zeigt. Der schaut vielleicht ein wenig müde und naiv, aber auf jeden Fall sehr milde von seinem himmlischen Thron auf die Menschen herab. Der alte Begriff Ehr-Furcht erinnert uns noch daran, dass es aber auch eine Seite Gottes gibt, die diesem Bild zuwiderläuft. Es gibt auch eine dunkle Seite Gottes, eine nicht ergründbare Seite, die sich nicht mit ein paar eigenen Glanzleistungen erhellen lässt. Die beiden Außenflügel dieses Triptychon sollen diese Seite Gottes andeuten. Der Goldgrund im oberen Teil des Bildes als Zeichen der Transzendenz, des göttlichen Bereiches, liegt unter mehreren Schichten von Schleiern. Das Paar Männer- und Frauenschuhe erinnern auch an die Gottesbegegnung des Mose: „Ziehe deine Schuhe von den Füßen, denn der Ort, auf dem du stehst, ist heiliges Land!“ Hier sind Adam und Eva: im wahrsten Sinne des Wortes aus den Latschen gekippt. „Sollte Gott gesagt haben…“ diese schlaue Frage erinnert daran, wie notwendig es ist, immer wieder das eigene Gottesbild zu überprüfen: Male ich mir vielleicht einen Gott vor Augen, wie es meinen Wünschen entspricht und fixiere so einen selbstgemachten Gott, der zuallererst meinen Bedürfnissen entspricht? Der Religionskritiker Anselm Feuerbach hat einen solchen Gott als reine Projektion menschlicher Wünsche und Sehnsüchte entlarvt. Vor dieser vernichtenden Kritik schützt nur der fortwährende Versuch, Gott so sehen zu wollen, wie er sich selber sehen lässt, sich selber zeigt. Und dabei gleichzeitig zu akzeptieren, dass Gott letztlich nicht völlig begreifbar ist - um im Bild zu bleiben: Dass manches unter Schleiern liegt und schleierhaft bleiben muss, will man Gott nicht seiner Gottheit berauben. Ein von uns vollständig begreifbarer Gott wäre auch vollständig in unserem Griff. Gott so zu sehen, wie er sich sehen lässt - ich denke, er kann sich so sehen lassen. Nun zur 2. Teil der Geschichte: „Das hätte ich dir gleich sagen können, dass das schiefgehen muss“ oder: „Hinterher ist immer der andere schuld.“ Regie: Der Mensch. Auch hier ein Schauspiel, das bis heute gespielt wird: „Adam, wo bist du?“ Adam, übersetzt „der Mensch“, wird von Gott gerufen und zur Rede gestellt. Adam antwortet ganz schlau: „Cherchez la femme“, „such lieber die Frau, ich war's nicht, und abgesehen warst du es doch, der mir die Frau zur Seite gestellt hat". Heute klingt das z.B. so: „Wenn die Welt besser wäre, könnte ich an Gott glauben. Wenn es einen Gott gäbe, würde er nicht so viel Unheil zulassen.“ „Ich bin nicht schuld, der andere war es“, das hört man nicht nur von Kindern in der Schule. In der großen Politik zu allen Zeiten, wie auch im kleinen privaten Alltag ist diese Floskel schnell zu hören - auch von uns selbst. Gott ruft und Adam, der Mensch, antwortet ohne sich zu verantworten. Dieses Spiel wird auch zu allen Zeiten in der Politik gespielt. Aktuell in Israel sind - je nach politischem Lager - immer nur die Israelis oder die Palästinenser schuld an dem drohenden Krieg. Der andere hat angefangen und ist schuld, nun muss er die Konsequenzen tragen. Das Drama von Eden wird so bis heute überall aufgeführt. Eva schließlich schiebt die Schuld weiter ab auf die Schlange, also letztendlich auf die äußeren Umstände. Modern gesprochen ist das sozio-kulturelle Milieu schuld an der Misere. Das klingt bei uns dann: „Das machen doch alle so“ oder „Schuld sind die gesellschaftlichen und wirtschaftlichen Zwänge“. Sie merken, durchaus modern dieses alte Stück „Jenseits von Eden“, da es zeitlos unsere Verhaltensmuster entlarvt und offenlegt und so zu eigenen Antworten und eigener Übernahme von Verantwortung aufruft. Noch etwas wird in dieser Erzählung deutlich: Dadurch, dass sie von einem Menschenpaar zu Beginn berichtet, zeigt sie in diesem Bild die Verbundenheit aller Menschen miteinander. Bemerkenswert, dass in einer Geschichte aus einer Welt, die von Männern geprägt war, eine Begebenheit erzählt wird, in der die Frau quasi die Hosen anhat: Während Adam noch den Schlaf des Gerechten schläft, ist sie schon auf den Beinen und treibt Konversation. Ich glaube nicht, dass Adam ihr nur an diesem Morgen das Reden und Erkennen überlassen hat, weil er schon ahnte, dass es um Verbotenes ging. Im Paradies gab es noch keine Rollenteilung, die scheint sich erst nach dem Sündenfall eingeschlichen zu haben. Aber nicht nur die Gleichheit der Geschlechter, sondern aller Menschen wird in dieser Erzählung als ursprünglich angesehen. Es sollen nach ihr doch alle Völker und Rassen von diesen beiden Geschöpfen Gottes abstammen. So gesehen sind alle Menschen letztendlich Schwestern und Brüder. Wohin es führt, wenn die Gleichwertigkeit aller Menschen aus dem Blick gerät, daran werden wir immer wieder erinnert: Dann werden hilfesuchende Menschen geopfert, weil das eigene Boot voll erscheint. Dann werden andere schon durch ihre Nationalität, Herkunft oder Hautfarbe verdächtig. Das Mittelteil dieses Bildes erinnert an die Zeit, in der dieses Sortieren der Menschen perfektioniert wurde. Auf ihm sind Seiten aus einem Buch der NS-Zeit mit dem Titel „Rasse und Seele“ zu sehen. Hier wurden die einzelnen Rassen auf bestimmte Charaktereigenschaften festgelegt. Über allen thront rechts und links oben das Bild des arischen Ideals von Adam und Eva. Das von oben herunterlaufende Pech markiert diesen Sündenfall. Und die Abdrücke von Soldatenstiefeln in der Mitte, die die Schuhe rechts und links aufnehmen, zeigen die Folgen solcher unterschiedlicher Wertschätzungen: Menschen werden mit Füßen getreten. Hier schließt sich wieder der Bogen zu den beiden Szenen der Sündenfallgeschichte: Letztendlich liegt es auch an meinem Gottesbild, wie ich mit der Welt und den Menschen auf ihr umgehe. Ein nur nach eigenen Vorstellungen und Wünschen konstruierter Gott ist ein Gott für mich ohne ein Gott an sich zu sein. Wohin ein solcher manipulierbarer „Gott mit uns" führen kann, haben wir in der Vergangenheit schmerzlich erlebt. Ein solcher Gott braucht keine Antwort, keine Verantwortung, dann kann wieder das alte Spiel beginnen „ich war's nicht, die anderen sind schuld.“ So wünsche ich uns die Ruhe, Gott zu Wort kommen zu lassen. Ich wünsche uns eine Stimme, die Antwort geben kann, Verantwortung übernehmen kann. „Jenseits von Eden“ - und ich wünsche uns allen zu Gott einen klaren Blick, der sich zwar von gemalten Bildern anregen lassen kann, aber dabei ohne Wunschbilder und Traumfiguren auskommt. Amen."
     },
     {
       "title": "anno Domini 2000",
@@ -1376,21 +1404,30 @@ function renderLb() {
   document.getElementById('lb-meta').innerHTML=`
     <div class="lb-row"><span class="lb-lbl">Maße</span><span class="lb-val">${w.size}</span></div>`;
   const wrap=document.getElementById('lb-extra-wrap');
-  const body=document.getElementById('lb-extra-body');
   const toggle=document.getElementById('lb-extra-toggle');
   if(w.extra) {
-    body.textContent=w.extra;
-    body.classList.remove('open');
+    document.getElementById('extra-modal-content').innerHTML=w.extra;
     toggle.classList.remove('open');
     wrap.style.display='block';
   } else { wrap.style.display='none'; }
 }
 function toggleExtra() {
-  document.getElementById('lb-extra-body').classList.toggle('open');
-  document.getElementById('lb-extra-toggle').classList.toggle('open');
+  if (!currentWorks.length) return;
+  const w=currentWorks[currentIdx];
+  if(!w.extra) return;
+  document.getElementById('extra-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeExtraModal() {
+  document.getElementById('extra-modal').classList.remove('open');
+  document.body.style.overflow='';
 }
 
 document.addEventListener('keydown',e=>{
+  if(document.getElementById('extra-modal').classList.contains('open')) {
+    if(e.key==='Escape') closeExtraModal();
+    return;
+  }
   if(!document.getElementById('lightbox').classList.contains('open')) return;
   if(e.key==='ArrowRight') lbNav(1);
   if(e.key==='ArrowLeft')  lbNav(-1);
@@ -1398,6 +1435,9 @@ document.addEventListener('keydown',e=>{
 });
 document.getElementById('lightbox').addEventListener('click',e=>{
   if(e.target===document.getElementById('lightbox')) closeLb();
+});
+document.getElementById('extra-modal').addEventListener('click',e=>{
+  if(e.target===document.getElementById('extra-modal')) closeExtraModal();
 });
 
 loadWorks();
