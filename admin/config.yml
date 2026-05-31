@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: DEIN_GITHUB_USERNAME/cesare-kaiser  # <-- hier anpassen!
+  repo: gabrielkaiser001-a11y/cesare-kaiser  # <-- hier anpassen!
   branch: main
 
 # Medien (Bilder) landen im Front/-Ordner
