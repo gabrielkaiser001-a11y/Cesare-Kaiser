@@ -418,7 +418,7 @@
   </div>
 </div>
 
-<footer><span>© 2026 Cesare Kaiser</span><span class="footer-admin" onclick="promptAdmin()">Admin</span><span>Alle Rechte vorbehalten</span></footer>
+<footer><span>© 2026 Cesare Kaiser</span><span>Alle Rechte vorbehalten</span></footer>
 
 <!-- EXTRA TEXT MODAL -->
 <div class="extra-modal" id="extra-modal">
@@ -467,7 +467,7 @@ const WORKS = {
       "img": "AktuelleIdeen/3.jpg",
       "desc": "",
       "size": "32 x 30 cm",
-      "extra": ""
+      "extra": null
     },
     {
       "title": "Es kommt ans Licht",
@@ -1254,8 +1254,6 @@ const PUBLIC_WORKS = [
 ];
 
 // ── INIT: works.json laden ────────────────────────────────────────────────────
-const ADMIN_PASSWORD = 'Cesare2026';
-
 async function loadWorks() {
   const externalWorks = await loadWorksJson();
   if (externalWorks) {
@@ -1283,16 +1281,6 @@ function registerVisit() {
     localStorage.setItem('cesare-last-visit', new Date().toISOString());
   } catch {
     // ignore storage errors
-  }
-}
-
-function promptAdmin() {
-  const pwd = prompt('Admin-Passwort eingeben');
-  if (!pwd) return;
-  if (pwd === ADMIN_PASSWORD) {
-    window.location.href = 'admin/index.html';
-  } else {
-    alert('Ungültiges Passwort.');
   }
 }
 
