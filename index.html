@@ -71,7 +71,7 @@
     /* ── INNER PAGE ── */
     .inner-page { min-height:calc(100vh - var(--nav-h)); padding:calc(var(--nav-h) + 48px) var(--pad) 80px; }
     #page-theorie .inner-page { display:flex; flex-direction:column; align-items:center; text-align:center; }
-    .s-label { font-size:0.64rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--red); margin-bottom:12px; }
+    .s-label { font-size:0.78rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--red); margin-bottom:12px; }
     .s-title { font-family:var(--font-d); font-size:clamp(2rem,4.5vw,3.8rem); font-weight:300; line-height:1.1; color:var(--white); }
 
     /* ── GALLERY HEADER – left ── */
@@ -101,7 +101,7 @@
     .cat-tile:last-child::before { display:none; }
 
     /* ── CATEGORY PAGE ── */
-    .back-btn { display:inline-flex; align-items:center; gap:9px; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--grey); cursor:pointer; margin-bottom:36px; transition:color 0.2s; }
+    .back-btn { display:inline-flex; align-items:center; gap:9px; font-size:0.82rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--grey); cursor:pointer; margin-bottom:36px; transition:color 0.2s; }
     .back-btn:hover { color:var(--white); }
     .back-arrow { transition:transform 0.2s var(--ease); }
     .back-btn:hover .back-arrow { transform:translateX(-4px); }
@@ -122,7 +122,7 @@
     .work-overlay { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:16px 14px; transition:background 0.3s; }
     .work-item:hover .work-overlay { background:rgba(26,26,26,0.55); }
     .work-title { font-family:var(--font-d); font-size:1rem; font-weight:300; color:var(--white); margin-bottom:2px; opacity:0; transform:translateY(6px); transition:opacity 0.3s, transform 0.3s var(--ease); }
-    .work-size { font-size:0.66rem; letter-spacing:0.08em; color:var(--red); opacity:0; transform:translateY(6px); transition:opacity 0.3s 0.05s, transform 0.3s 0.05s var(--ease); }
+    .work-size { font-size:0.8rem; letter-spacing:0.08em; color:var(--red); opacity:0; transform:translateY(6px); transition:opacity 0.3s 0.05s, transform 0.3s 0.05s var(--ease); }
     .work-item:hover .work-title, .work-item:hover .work-size { opacity:1; transform:translateY(0); }
 
     /* ── LIGHTBOX ── */
@@ -135,10 +135,10 @@
     .lb-cat { font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--red); margin-bottom:12px; }
     .lb-title { font-family:var(--font-d); font-size:1.9rem; font-weight:300; line-height:1.15; color:var(--white); margin-bottom:18px; }
     .lb-line { width:28px; height:1px; background:var(--red); margin-bottom:18px; }
-    .lb-desc { font-size:0.83rem; color:var(--lgrey); line-height:1.85; margin-bottom:22px; }
+    .lb-desc { font-size:0.92rem; color:var(--lgrey); line-height:1.85; margin-bottom:22px; }
     .lb-meta { display:flex; flex-direction:column; gap:7px; margin-bottom:20px; }
     .lb-row { display:flex; gap:10px; font-size:0.74rem; }
-    .lb-lbl { color:var(--grey); min-width:68px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; font-size:0.68rem; }
+    .lb-lbl { color:var(--grey); min-width:68px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; font-size:0.75rem; }
     .lb-val { color:var(--lgrey); }
     .lb-extra-wrap { margin-top:8px; }
     .lb-extra-toggle { display:flex; align-items:center; gap:8px; font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--red); cursor:pointer; padding:8px 0; border-top:1px solid var(--border); transition:color 0.2s; user-select:none; }
@@ -418,7 +418,7 @@
   </div>
 </div>
 
-<footer><span>© 2026 Cesare Kaiser</span><span>Alle Rechte vorbehalten</span></footer>
+<footer><span>© 2026 Cesare Kaiser</span><span class="footer-admin" onclick="promptAdmin()">Admin</span><span>Alle Rechte vorbehalten</span></footer>
 
 <!-- EXTRA TEXT MODAL -->
 <div class="extra-modal" id="extra-modal">
@@ -451,7 +451,7 @@ const WORKS = {
     {
       "title": "Blauäugig",
       "img": "AktuelleIdeen/1.jpg",
-      "desc": "Beschreibung zu diesem Werk.",
+      "desc": "",
       "size": "37,5 x 28 cm",
       "extra": null
     },
@@ -465,21 +465,21 @@ const WORKS = {
     {
       "title": "Der Fall Engel",
       "img": "AktuelleIdeen/3.jpg",
-      "desc": "Beschreibung zu diesem Werk.",
+      "desc": "",
       "size": "32 x 30 cm",
       "extra": ""
     },
     {
       "title": "Es kommt ans Licht",
       "img": "AktuelleIdeen/4.jpg",
-      "desc": "Beschreibung zu diesem Werk.",
+      "desc": "",
       "size": "40 x 32 cm",
       "extra": null
     },
     {
       "title": "Geschlossene Wolkendecke",
       "img": "AktuelleIdeen/5.jpg",
-      "desc": "Beschreibung zu diesem Werk.",
+      "desc": "",
       "size": "92 x 31 cm",
       "extra": null
     },
@@ -488,12 +488,12 @@ const WORKS = {
       "img": "AktuelleIdeen/6.jpg",
       "desc": "Titel erinnert an das AK 47, besser bekannt als Kalaschnikow, aber diese Waffe schießt andere Kugeln.",
       "size": "60 x 110 cm",
-      "extra": "Liebe Gemeinde! Heute habe ich Ihnen ein Bild eines alten Schlägertypen mitgebracht. Mit ihm konnte man gewaltig ausholen und seinem Gegner die Filzkugeln um die Ohren schießen. Mancher Aufschlag war so granatenmäßig, dass der Gegner nicht mehr zurückschlagen konnte und verlor. Der Titel dieses Bildes lautet LK 6.29 und erinnert damit an ganz andere Waffen, mit denen noch schärfer zurückgeschossen werden konnte: Das AK 47 werden nur wenige kennen. Bekannter ist es unter dem Namen seines Erfinders Kalaschnikow. Ein Maschinengewehr, das seine Gegner mit ganzen Salven von Kugeln in Schach hält. Mit diesem LK 6.29 konnte man seinen Gegner auch ganz empfindlich treffen und zurückschlagen. Es ist da nicht gerade zartbesaitet. Aber die heutige Predigt soll nicht nur von verschiedenen Schlägertypen handeln. Der Bibelkenner wird auch schon gemerkt haben, dass LK 6.29 auch eine Bibelstelle ist. Aber auch diese Bibelstelle handelt von verschiedenen Schlägertypen Ich lese uns die Worte Jesu einmal vor, wie sie der LK, der Evangelist Lukas, in seinem sechsten Kapitel überliefert hat. Damit der Zusammenhang deutlicher wird, lese jedoch nicht nur den 29. Vers vor, sondern auch noch die ihn umgebenden Verse: (LK 6, 27-36) "Aber ich sage euch, die ihr zuhört: Liebt eure Feinde; tut wohl denen, die euch hassen; segnet, die euch verfluchen; bittet für die, die euch beleidigen. Und wer dich auf die eine Backe schlägt, dem biete die andere auch dar; und wer dir den Mantel nimmt, dem verweigere auch den Rock nicht. Wer dich bittet, dem gib; und wer dir das Deine nimmt, von dem fordere es nicht zurück. Und wie ihr wollt, dass euch die Leute tun sollen, so tut ihnen auch! Und wenn ihr die liebt, die euch lieben, welchen Dank habt ihr davon? Denn auch die Sünder lieben ihre Freunde. Und wenn ihr euren Wohltätern wohltut, welchen Dank habt ihr davon? Denn die Sünder tun dasselbe auch. Und wenn ihr denen leiht, von denen ihr etwas zu bekommen hofft, welchen Dank habt ihr davon? Auch die Sünder leihen den Sündern, damit sie das Gleiche bekommen. Vielmehr liebt eure Feinde; tut Gutes und leiht, wo ihr nichts dafür zu bekommen hofft. So wird euer Lohn groß sein, und ihr werdet Kinder des Allerhöchsten sein; denn er ist gütig gegen die Undankbaren und Bösen. Seid barmherzig, wie auch euer Vater barmherzig ist." Jesu Umgang mit Schlägern klingt ja schon etwas weltfremd: "Und wer dich auf die eine Backe schlägt, dem biete die andere auch dar" Da soll ich nicht nur wehrlos den ersten Schlag einstecken, sondern mich auch noch dem nächsten Schlag präsentieren. Wenn ich mir das ganz realistisch überlege, dass ich den ersten Schlag mit den Handinnenfläche abbekommen habe: Soll ich also dann auch noch den nächsten, härteren, Schlag mit dem Handrücken ins Gesicht zulassen? Und, wenn ich Jesus richtig verstehe, ist nach diesen beiden Schlägen auch noch nicht Schluss, sondern es soll immer weiter so gehen: "Und wer dich auf die eine Backe schlägt, dem biete die andere auch dar" Schlägertypen scheinen hier am längeren Hebel zu sitzen. Passiert hier nicht genau das, was so oft geschieht: Der Stärkere setzt sich durch, Schläge sind das gewaltigtätigste und gewaltigste Argument. Jesus muss sich dem Vorwurf aussetzen, er habe als Traumtänzer den Kontakt zur Realität verloren. Denn in der harten Realität sind diese Forderungen schwer zu praktizieren. Seit den Anfängen der Christenheit wird darüber diskutiert, ob diese Forderungen Jesu überhaupt realisierbar gedacht waren. Je mehr Christen politische Verantwortung übernahmen, desto lauter wurde der Zweifel, ob sich diese radikale Abkehr von Gewalt auch in der Realpolitik durchhalten lässt. Es gab daher zahlreiche Deutungen dieser Worte Jesu. So deutete man sie allegorisch, also nur als Bildworte, die nicht wörtlich, sondern nur im übertragenen Sinne zu verstehen seien. Oder man erklärte sie als nur zu den Jüngern gesagt und nicht zum einfachen Volk. Dem entsprechend seien sie auch nur für die Geistlichkeit und nicht für die einfachen Christen verpflichtend. Oder man erklärte die harten Forderungen Jesu mit dessen Erwartung eines nahen Weltendes. Sie seien von daher nur für eine kurze Zeit an einem begrenzten Ort gedacht gewesen, aber sonst nicht realisierbar. Schließlich konnte man in ihnen auch ein so hohes Ideal erkennen, das nie erfüllt werden könne. Daher stehe es vortrefflich als Anreiz zu guten Handeln vor Augen und könne nie als erledigt abgetan werden. "Und wer dich auf die eine Backe schlägt, dem biete die andere auch dar" Dieser Schläger LK 6.29 zeigt im wahrsten Sinne eindrücklich Jesu Worte. Was auf den ersten Blick wie ein ""Peace"" - Zeichen aussieht, besteht aus dem Gekreuzigten, der die Saiten zerrissen hat. Dieser Schläger kann nicht mehr zurückschlagen. Ein Gott, der selber nicht zurückschlagen will, sondern die Gewalt auf sich nahm, der will auch seine Nachfolger rückschlagsfrei haben. Diese völlige Ablehnung von Gewalt, die auf das eigene Recht der Selbstverteidigung verzichtet, scheint auf den ersten Blick im Privaten sehr wirklichkeitsfern und in realpolitischen Dimensionen sogar gefährlich zu sein. Wie soll sich eine Nation durchsetzen, wenn alle anderen alles mit ihr machen können und dabei nichts Negatives erwarten müssen, sondern im Gegenteil auch noch ermuntert werden zu weiteren Übergriffen? Andererseits, wenn man sich heute so manche Konfliktherde in der Welt ansieht, dann muss man zugestehen, dass der Teufelskreis von Gewalt und Gegengewalt nur noch durchbrochen werden kann, wenn beide Parteien auf ihr Recht verzichten und dem Gegner die Hand reichen, ungeachtet der Verletzungen der Vergangenheit. So realitäts- und lebensfern die Worte Jesu klingen mögen, bei manchen Konflikten sind sie wohl die einzige Möglichkeit die Realität so zu gestalten, dass Leben wieder möglich wird – ganz real jetzt und hier, bei mir privat im Kleinen und auch in den großen Zusammenhängen der Welt. Denn wer Feindesliebe unrealistisch findet, der muss zugeben, dass das Gegenteil, der Feindeshass, auf dem Weg zum Frieden zumindest ebenso unrealistisch ist. Jesus scheint hier mit traumtänzerischer Sicherheit einen realen Weg gefunden zu haben. So gesehen hat der ""Durchbrecher aller Bande"" neue Saiten aufgezogen, die eher ein Netz bilden, das auffängt, als zu einen Rückschlag ausholen. Hoffen und beten wir, dass unsere Beschäftigung mit dem Thema Zurückschlagen eine theoretische bleibt, und der Schläger im Rahmen bleibt! Amen O, Durchbrecher aller Bande EG 388"
+      "extra": "Liebe Gemeinde! Heute habe ich Ihnen ein Bild eines alten Schlägertypen mitgebracht. Mit ihm konnte man gewaltig ausholen und seinem Gegner die Filzkugeln um die Ohren schießen. Mancher Aufschlag war so granatenmäßig, dass der Gegner nicht mehr zurückschlagen konnte und verlor. Der Titel dieses Bildes lautet LK 6.29 und erinnert damit an ganz andere Waffen, mit denen noch schärfer zurückgeschossen werden konnte: Das AK 47 werden nur wenige kennen. Bekannter ist es unter dem Namen seines Erfinders Kalaschnikow. Ein Maschinengewehr, das seine Gegner mit ganzen Salven von Kugeln in Schach hält. Mit diesem LK 6.29 konnte man seinen Gegner auch ganz empfindlich treffen und zurückschlagen. Es ist da nicht gerade zartbesaitet. Aber die heutige Predigt soll nicht nur von verschiedenen Schlägertypen handeln. Der Bibelkenner wird auch schon gemerkt haben, dass LK 6.29 auch eine Bibelstelle ist. Aber auch diese Bibelstelle handelt von verschiedenen Schlägertypen Ich lese uns die Worte Jesu einmal vor, wie sie der LK, der Evangelist Lukas, in seinem sechsten Kapitel überliefert hat. Damit der Zusammenhang deutlicher wird, lese jedoch nicht nur den 29. Vers vor, sondern auch noch die ihn umgebenden Verse: (LK 6, 27-36) \"Aber ich sage euch, die ihr zuhört: Liebt eure Feinde; tut wohl denen, die euch hassen; segnet, die euch verfluchen; bittet für die, die euch beleidigen. Und wer dich auf die eine Backe schlägt, dem biete die andere auch dar; und wer dir den Mantel nimmt, dem verweigere auch den Rock nicht. Wer dich bittet, dem gib; und wer dir das Deine nimmt, von dem fordere es nicht zurück. Und wie ihr wollt, dass euch die Leute tun sollen, so tut ihnen auch! Und wenn ihr die liebt, die euch lieben, welchen Dank habt ihr davon? Denn auch die Sünder lieben ihre Freunde. Und wenn ihr euren Wohltätern wohltut, welchen Dank habt ihr davon? Denn die Sünder tun dasselbe auch. Und wenn ihr denen leiht, von denen ihr etwas zu bekommen hofft, welchen Dank habt ihr davon? Auch die Sünder leihen den Sündern, damit sie das Gleiche bekommen. Vielmehr liebt eure Feinde; tut Gutes und leiht, wo ihr nichts dafür zu bekommen hofft. So wird euer Lohn groß sein, und ihr werdet Kinder des Allerhöchsten sein; denn er ist gütig gegen die Undankbaren und Bösen. Seid barmherzig, wie auch euer Vater barmherzig ist.\" Jesu Umgang mit Schlägern klingt ja schon etwas weltfremd: \"Und wer dich auf die eine Backe schlägt, dem biete die andere auch dar\" Da soll ich nicht nur wehrlos den ersten Schlag einstecken, sondern mich auch noch dem nächsten Schlag präsentieren. Wenn ich mir das ganz realistisch überlege, dass ich den ersten Schlag mit den Handinnenfläche abbekommen habe: Soll ich also dann auch noch den nächsten, härteren, Schlag mit dem Handrücken ins Gesicht zulassen? Und, wenn ich Jesus richtig verstehe, ist nach diesen beiden Schlägen auch noch nicht Schluss, sondern es soll immer weiter so gehen: \"Und wer dich auf die eine Backe schlägt, dem biete die andere auch dar\" Schlägertypen scheinen hier am längeren Hebel zu sitzen. Passiert hier nicht genau das, was so oft geschieht: Der Stärkere setzt sich durch, Schläge sind das gewaltigtätigste und gewaltigste Argument. Jesus muss sich dem Vorwurf aussetzen, er habe als Traumtänzer den Kontakt zur Realität verloren. Denn in der harten Realität sind diese Forderungen schwer zu praktizieren. Seit den Anfängen der Christenheit wird darüber diskutiert, ob diese Forderungen Jesu überhaupt realisierbar gedacht waren. Je mehr Christen politische Verantwortung übernahmen, desto lauter wurde der Zweifel, ob sich diese radikale Abkehr von Gewalt auch in der Realpolitik durchhalten lässt. Es gab daher zahlreiche Deutungen dieser Worte Jesu. So deutete man sie allegorisch, also nur als Bildworte, die nicht wörtlich, sondern nur im übertragenen Sinne zu verstehen seien. Oder man erklärte sie als nur zu den Jüngern gesagt und nicht zum einfachen Volk. Dem entsprechend seien sie auch nur für die Geistlichkeit und nicht für die einfachen Christen verpflichtend. Oder man erklärte die harten Forderungen Jesu mit dessen Erwartung eines nahen Weltendes. Sie seien von daher nur für eine kurze Zeit an einem begrenzten Ort gedacht gewesen, aber sonst nicht realisierbar. Schließlich konnte man in ihnen auch ein so hohes Ideal erkennen, das nie erfüllt werden könne. Daher stehe es vortrefflich als Anreiz zu guten Handeln vor Augen und könne nie als erledigt abgetan werden. \"Und wer dich auf die eine Backe schlägt, dem biete die andere auch dar\" Dieser Schläger LK 6.29 zeigt im wahrsten Sinne eindrücklich Jesu Worte. Was auf den ersten Blick wie ein \"Peace\" - Zeichen aussieht, besteht aus dem Gekreuzigten, der die Saiten zerrissen hat. Dieser Schläger kann nicht mehr zurückschlagen. Ein Gott, der selber nicht zurückschlagen will, sondern die Gewalt auf sich nahm, der will auch seine Nachfolger rückschlagsfrei haben. Diese völlige Ablehnung von Gewalt, die auf das eigene Recht der Selbstverteidigung verzichtet, scheint auf den ersten Blick im Privaten sehr wirklichkeitsfern und in realpolitischen Dimensionen sogar gefährlich zu sein. Wie soll sich eine Nation durchsetzen, wenn alle anderen alles mit ihr machen können und dabei nichts Negatives erwarten müssen, sondern im Gegenteil auch noch ermuntert werden zu weiteren Übergriffen? Andererseits, wenn man sich heute so manche Konfliktherde in der Welt ansieht, dann muss man zugestehen, dass der Teufelskreis von Gewalt und Gegengewalt nur noch durchbrochen werden kann, wenn beide Parteien auf ihr Recht verzichten und dem Gegner die Hand reichen, ungeachtet der Verletzungen der Vergangenheit. So realitäts- und lebensfern die Worte Jesu klingen mögen, bei manchen Konflikten sind sie wohl die einzige Möglichkeit die Realität so zu gestalten, dass Leben wieder möglich wird – ganz real jetzt und hier, bei mir privat im Kleinen und auch in den großen Zusammenhängen der Welt. Denn wer Feindesliebe unrealistisch findet, der muss zugeben, dass das Gegenteil, der Feindeshass, auf dem Weg zum Frieden zumindest ebenso unrealistisch ist. Jesus scheint hier mit traumtänzerischer Sicherheit einen realen Weg gefunden zu haben. So gesehen hat der \"Durchbrecher aller Bande\" neue Saiten aufgezogen, die eher ein Netz bilden, das auffängt, als zu einen Rückschlag ausholen. Hoffen und beten wir, dass unsere Beschäftigung mit dem Thema Zurückschlagen eine theoretische bleibt, und der Schläger im Rahmen bleibt! Amen O, Durchbrecher aller Bande EG 388"
     },
     {
       "title": "Wunde Leiter",
       "img": "AktuelleIdeen/7.jpg",
-      "desc": "Beschreibung zu diesem Werk.",
+      "desc": "",
       "size": "37 x 30 cm",
       "extra": null
     }
@@ -1254,9 +1254,46 @@ const PUBLIC_WORKS = [
 ];
 
 // ── INIT: works.json laden ────────────────────────────────────────────────────
+const ADMIN_PASSWORD = 'Cesare2026';
+
 async function loadWorks() {
+  const externalWorks = await loadWorksJson();
+  if (externalWorks) {
+    WORKS = externalWorks;
+  }
   renderGallery();
   renderTimeline();
+  registerVisit();
+}
+
+async function loadWorksJson() {
+  try {
+    const response = await fetch('data/works.json');
+    if (!response.ok) return null;
+    return await response.json();
+  } catch {
+    return null;
+  }
+}
+
+function registerVisit() {
+  try {
+    const visits = parseInt(localStorage.getItem('cesare-site-views') || '0', 10) + 1;
+    localStorage.setItem('cesare-site-views', visits);
+    localStorage.setItem('cesare-last-visit', new Date().toISOString());
+  } catch {
+    // ignore storage errors
+  }
+}
+
+function promptAdmin() {
+  const pwd = prompt('Admin-Passwort eingeben');
+  if (!pwd) return;
+  if (pwd === ADMIN_PASSWORD) {
+    window.location.href = 'admin/index.html';
+  } else {
+    alert('Ungültiges Passwort.');
+  }
 }
 
 async function buildWorksFromFront() {
@@ -1400,7 +1437,11 @@ function renderLb() {
   document.getElementById('lb-img').alt=w.title;
   document.getElementById('lb-cat').textContent=currentCatName;
   document.getElementById('lb-title').textContent=w.title;
-  document.getElementById('lb-desc').textContent=w.desc;
+  const descEl = document.getElementById('lb-desc');
+  const desc = (w.desc || '').trim();
+  const showDesc = desc && desc !== 'Beschreibung zu diesem Werk.';
+  descEl.textContent = showDesc ? desc : '';
+  descEl.style.display = showDesc ? 'block' : 'none';
   document.getElementById('lb-meta').innerHTML=`
     <div class="lb-row"><span class="lb-lbl">Maße</span><span class="lb-val">${w.size}</span></div>`;
   const wrap=document.getElementById('lb-extra-wrap');
