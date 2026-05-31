@@ -140,12 +140,12 @@
     .lb-row { display:flex; gap:10px; font-size:0.74rem; }
     .lb-lbl { color:var(--grey); min-width:68px; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; font-size:0.75rem; }
     .lb-val { color:var(--lgrey); }
-    .lb-extra-wrap { margin-top:8px; }
-    .lb-extra-toggle { display:flex; align-items:center; gap:8px; font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--red); cursor:pointer; padding:8px 0; border-top:1px solid var(--border); transition:color 0.2s; user-select:none; }
-    .lb-extra-toggle:hover { color:var(--red-hover); }
-    .lb-extra-toggle .toggle-icon { display:inline-block; font-size:0.8rem; transition:transform 0.3s var(--ease); }
+    .lb-extra-wrap { margin-top:18px; padding-top:14px; border-top:1px solid var(--border); }
+    .lb-extra-toggle { display:inline-flex; align-items:center; gap:10px; font-size:0.85rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--white); cursor:pointer; padding:14px 16px; border-radius:999px; background:rgba(150,40,27,0.11); border:1px solid rgba(150,40,27,0.35); transition:color 0.2s, background 0.2s, transform 0.2s; user-select:none; }
+    .lb-extra-toggle:hover { background:rgba(150,40,27,0.18); color:var(--white); transform:translateY(-1px); }
+    .lb-extra-toggle .toggle-icon { display:inline-block; font-size:1rem; transition:transform 0.3s var(--ease); }
     .lb-extra-toggle.open .toggle-icon { transform:rotate(45deg); }
-    .lb-extra-body { display:none; font-size:0.8rem; font-style:italic; color:var(--lgrey); line-height:1.9; border-left:2px solid var(--red); padding:12px 0 4px 14px; margin-top:2px; animation:fadeUp 0.25s var(--ease); }
+    .lb-extra-body { display:none; font-size:0.88rem; font-style:italic; color:var(--lgrey); line-height:1.9; border-left:2px solid var(--red); padding:16px 0 4px 16px; margin-top:12px; animation:fadeUp 0.25s var(--ease); }
     .lb-extra-body.open { display:block; }
     .lb-nav { margin-top:auto; padding-top:28px; display:flex; gap:10px; }
     .lb-nav button { flex:1; padding:11px; border:1px solid var(--border); color:var(--grey); font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; border-radius:6px; transition:border-color 0.2s, color 0.2s, background 0.2s; }
@@ -1431,7 +1431,7 @@ function renderLb() {
   descEl.textContent = showDesc ? desc : '';
   descEl.style.display = showDesc ? 'block' : 'none';
   document.getElementById('lb-meta').innerHTML=`
-    <div class="lb-row"><span class="lb-lbl">Größe</span><span class="lb-val">${w.size}</span></div>`;
+    <div class="lb-row"><span class="lb-lbl">Maaße</span><span class="lb-val">${w.size}</span></div>`;
   const wrap=document.getElementById('lb-extra-wrap');
   const toggle=document.getElementById('lb-extra-toggle');
   if(w.extra) {
