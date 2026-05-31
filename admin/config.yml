@@ -22,7 +22,7 @@ collections:
               - {label: "Titel", name: "title", widget: "string"}
               - {label: "Bild (Pfad z.B. Front/AktuelleIdeen/8.jpg)", name: "img", widget: "string"}
               - {label: "Beschreibung", name: "desc", widget: "text", required: false}
-              - {label: "Maße", name: "size", widget: "string", required: false}
+              - {label: "Größe", name: "size", widget: "string", required: false}
               - {label: "Begleittext (ausklappbar, optional)", name: "extra", widget: "text", required: false}
           - label: "Ich-Serie"
             name: "ich-serie"
