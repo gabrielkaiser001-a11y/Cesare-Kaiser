@@ -424,6 +424,7 @@
 <div class="extra-modal" id="extra-modal">
   <div class="extra-modal-content" id="extra-modal-content">
     <button class="extra-modal-close" onclick="closeExtraModal()">✕</button>
+    <div class="extra-modal-body" id="extra-modal-body"></div>
   </div>
 </div>
 
@@ -1444,6 +1445,7 @@ function toggleExtra() {
   if (!currentWorks.length) return;
   const w=currentWorks[currentIdx];
   if(!w.extra) return;
+  document.getElementById('extra-modal-body').innerHTML = w.extra;
   document.getElementById('extra-modal').classList.add('open');
   document.body.style.overflow='hidden';
 }
@@ -1462,6 +1464,16 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft')  lbNav(-1);
   if(e.key==='Escape') closeLb();
 });
+function onLightboxWheel(e) {
+  const lb=document.getElementById('lightbox');
+  const extra=document.getElementById('extra-modal');
+  if(!lb.classList.contains('open') || extra.classList.contains('open')) return;
+  if(Math.abs(e.deltaY) < 20) return;
+  e.preventDefault();
+  if(e.deltaY > 0) lbNav(1);
+  else if(e.deltaY < 0) lbNav(-1);
+}
+document.getElementById('lightbox').addEventListener('wheel', onLightboxWheel, { passive:false });
 document.getElementById('lightbox').addEventListener('click',e=>{
   if(e.target===document.getElementById('lightbox')) closeLb();
 });
