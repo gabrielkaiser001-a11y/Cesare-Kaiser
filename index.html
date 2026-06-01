@@ -129,14 +129,8 @@
     .lightbox { display:none; position:fixed; inset:0; z-index:1000; background:rgba(10,10,10,0.96); backdrop-filter:blur(6px); }
     .lightbox.open { display:flex; animation:fadeUp 0.25s var(--ease); }
     .lb-img-side { flex:1; display:flex; align-items:center; justify-content:center; padding:48px var(--pad); min-width:0; }
-    .lb-img-wrapper { width:100%; max-width:min(680px, calc(100vw - 360px - var(--pad) * 2)); position:relative; overflow:hidden; min-height:calc(100vh - 96px); display:flex; align-items:center; justify-content:center; }
-    .lb-img-wrapper img { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); max-width:100%; max-height:calc(100vh - 96px); object-fit:contain; border-radius:6px; box-shadow:0 24px 64px rgba(0,0,0,0.6); transition:transform 0.35s var(--ease), opacity 0.35s var(--ease); }
-    .lb-img-wrapper img.slide-in-left { transform:translate(calc(-50% - 100%), -50%); opacity:0; }
-    .lb-img-wrapper img.slide-in-right { transform:translate(calc(-50% + 100%), -50%); opacity:0; }
-    .lb-img-wrapper img.slide-active { transform:translate(-50%,-50%); opacity:1; }
-    .lb-img-temp { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); max-width:100%; max-height:calc(100vh - 96px); object-fit:contain; border-radius:6px; box-shadow:0 24px 64px rgba(0,0,0,0.6); transition:transform 0.35s var(--ease), opacity 0.35s var(--ease); }
-    .lb-img-temp.slide-out-left { transform:translate(calc(-50% - 100%), -50%); opacity:0; }
-    .lb-img-temp.slide-out-right { transform:translate(calc(-50% + 100%), -50%); opacity:0; }
+    .lb-img-wrapper { width:100%; max-width:min(680px, calc(100vw - 360px - var(--pad) * 2)); display:flex; align-items:center; justify-content:center; }
+    .lb-img-wrapper img { display:block; width:100%; height:auto; max-height:calc(100vh - 96px); object-fit:contain; border-radius:6px; box-shadow:0 24px 64px rgba(0,0,0,0.6); }
     .lb-info { width:340px; min-width:280px; padding:80px 32px 36px; border-left:1px solid var(--border); display:flex; flex-direction:column; overflow-y:auto; flex-shrink:0; }
     .lb-cat { font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--red); margin-bottom:12px; }
     .lb-title { font-family:var(--font-d); font-size:1.9rem; font-weight:300; line-height:1.15; color:var(--white); margin-bottom:18px; }
@@ -1422,40 +1416,14 @@ function openLb(i) {
 }
 function closeLb(){ document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow=''; }
 function lbNav(dir) {
-  if (!currentWorks.length) return;
   currentIdx=(currentIdx+dir+currentWorks.length)%currentWorks.length;
-  renderLb(dir);
+  renderLb();
   document.getElementById('lightbox').scrollTop=0;
 }
-function animateLbImage(src, alt, dir) {
-  const wrapper = document.querySelector('.lb-img-wrapper');
-  const img = document.getElementById('lb-img');
-  const oldImg = img.cloneNode(true);
-  oldImg.className = 'lb-img-temp';
-  wrapper.appendChild(oldImg);
-  oldImg.offsetHeight;
-  img.classList.remove('slide-in-left','slide-in-right','slide-active');
-  img.classList.add(dir > 0 ? 'slide-in-right' : 'slide-in-left');
-  img.src = src;
-  img.alt = alt;
-  requestAnimationFrame(() => {
-    img.classList.add('slide-active');
-    oldImg.classList.add(dir > 0 ? 'slide-out-left' : 'slide-out-right');
-  });
-  oldImg.addEventListener('transitionend', () => {
-    if (oldImg.parentElement) oldImg.parentElement.removeChild(oldImg);
-  }, { once: true });
-}
-function renderLb(direction = 0) {
+function renderLb() {
   const w=currentWorks[currentIdx];
-  if (direction) {
-    animateLbImage(w.img, w.title, direction);
-  } else {
-    const img=document.getElementById('lb-img');
-    img.classList.remove('slide-in-left','slide-in-right','slide-active');
-    img.src=w.img;
-    img.alt=w.title;
-  }
+  document.getElementById('lb-img').src=w.img;
+  document.getElementById('lb-img').alt=w.title;
   document.getElementById('lb-cat').textContent=currentCatName;
   document.getElementById('lb-title').textContent=w.title;
   const descEl = document.getElementById('lb-desc');
@@ -1468,6 +1436,7 @@ function renderLb(direction = 0) {
   const wrap=document.getElementById('lb-extra-wrap');
   const toggle=document.getElementById('lb-extra-toggle');
   if(w.extra) {
+    document.getElementById('extra-modal-content').innerHTML=w.extra;
     toggle.classList.remove('open');
     wrap.style.display='block';
   } else { wrap.style.display='none'; }
