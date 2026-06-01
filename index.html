@@ -239,14 +239,20 @@
       .bio-left { grid-column:auto; grid-row:2; }
       .bio-left .bio-portrait { display:none; }
       .bio-portrait.mobile-only { display:block; }
+      .gallery-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; max-width:calc(100vw - 24px); }
+      .cat-tile { height:auto; aspect-ratio:1 / 1; border-radius:12px; }
+      .cat-tile-content { padding:18px; }
+      .cat-tag { opacity:1; transform:none; }
+      .cat-tile-bg { opacity:1; filter:brightness(0.55); }
+      .cat-tile-bg::after { background:rgba(10,10,10,0.55); }
       .works-grid { columns:2; column-gap:10px; }
       .lb-info { width:280px; min-width:240px; padding:72px 24px 28px; }
       .lb-img-wrapper { max-width:calc(100vw - 320px - var(--pad) * 2); }
     }
     @media (max-width:600px) {
       .works-grid { columns:1; }
-      .cat-tile { height:58px !important; border-radius:8px; }
-      .cat-tile-content { padding:0 18px; }
+      .cat-tile { height:auto !important; aspect-ratio:1 / 1; border-radius:10px; }
+      .cat-tile-content { padding:16px; }
       .cat-name { font-size:1.15rem; }
       .lightbox.open { flex-direction:column; overflow-y:auto; }
       .lb-img-side { flex:none; width:100%; padding:calc(var(--nav-h) + 8px) 0 0; justify-content:flex-start; }
@@ -258,7 +264,8 @@
       .timeline { padding-left:60px; }
       .timeline::before { left:40px; }
       .tl-year { left:-60px; width:36px; font-size:0.82rem; }
-      footer { flex-direction:column; gap:6px; text-align:center; }
+    }
+      footer { flex-direction:column; gap:6px; text-align:center; 
     }
   </style>
 </head>
@@ -447,7 +454,7 @@ const CATS = [
 // Hinweis: Die Galerieinformationen sind direkt ins Skript eingebettet.
 // Um Bilder hinzuzufügen: bearbeite die WORKS-Daten in dieser Datei.
 
-const WORKS = {
+let WORKS = {
   "aktuelle-ideen": [
     {
       "title": "Blauäugig",
@@ -1477,6 +1484,30 @@ document.getElementById('lightbox').addEventListener('wheel', onLightboxWheel, {
 document.getElementById('lightbox').addEventListener('click',e=>{
   if(e.target===document.getElementById('lightbox')) closeLb();
 });
+let lbTouchStartX = null;
+let lbTouchStartY = null;
+function onLightboxTouchStart(e) {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  const touch = e.touches[0];
+  if (!touch) return;
+  lbTouchStartX = touch.clientX;
+  lbTouchStartY = touch.clientY;
+}
+function onLightboxTouchEnd(e) {
+  if (lbTouchStartX === null) return;
+  const touch = e.changedTouches[0];
+  if (!touch) return;
+  const dx = touch.clientX - lbTouchStartX;
+  const dy = touch.clientY - lbTouchStartY;
+  lbTouchStartX = null;
+  lbTouchStartY = null;
+  if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+  if (dx > 0) lbNav(-1);
+  else lbNav(1);
+}
+document.getElementById('lightbox').addEventListener('touchstart', onLightboxTouchStart, { passive:true });
+document.getElementById('lightbox').addEventListener('touchend', onLightboxTouchEnd);
+
 document.getElementById('extra-modal').addEventListener('click',e=>{
   if(e.target===document.getElementById('extra-modal')) closeExtraModal();
 });
