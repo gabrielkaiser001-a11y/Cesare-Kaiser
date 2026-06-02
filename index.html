@@ -268,8 +268,9 @@
       .timeline::before { left:40px; }
       .tl-year { left:-60px; width:36px; font-size:0.82rem; }
     }
-      footer { flex-direction:column; gap:6px; text-align:center; 
-    }
+    footer { flex-direction:row; flex-wrap:wrap; gap:12px; justify-content:space-between; text-align:left; }
+    footer span { white-space:nowrap; }
+    footer .footer-center { order:0; text-align:center; }
   </style>
 </head>
 <body>
@@ -428,7 +429,7 @@
   </div>
 </div>
 
-<footer><span>© 2026 Cesare Kaiser</span><span>Alle Rechte vorbehalten</span></footer>
+<footer><span>© 2026 Cesare Kaiser</span><span class="footer-center">v1.13</span><span>Alle Rechte vorbehalten</span></footer>
 
 <!-- EXTRA TEXT MODAL -->
 <div class="extra-modal" id="extra-modal">
