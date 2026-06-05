@@ -219,8 +219,9 @@
     .contact-item a.email-link { text-decoration:underline; }
     .contact-item a.email-link:hover { color:var(--red); }
     .contact-item:last-of-type { margin-bottom:44px; }
-    .contact-icon { width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--grey); border-radius:14px; overflow:hidden; background:var(--bg); box-sizing:border-box; padding:6px; }
-    .contact-icon img { width:100%; height:100%; object-fit:contain; display:block; }
+    .contact-icon { width:auto; height:auto; display:inline-flex; align-items:center; justify-content:center; padding:0; margin-right:12px; color:var(--white); }
+    .contact-icon svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+    .contact-icon path, .contact-icon circle, .contact-icon rect, .contact-icon polyline, .contact-icon line { vector-effect:non-scaling-stroke; }
     .contact-email { color:var(--grey); border-bottom:none; padding-bottom:0; margin-bottom:0; }
     .contact-div { display:flex; align-items:center; gap:18px; margin-bottom:32px; }
     .contact-div::before, .contact-div::after { content:''; flex:1; height:1px; background:var(--border); }
@@ -410,9 +411,9 @@
         <h2 class="contact-title">Kontaktdaten</h2>
         <div class="contact-line"></div>
         <p class="contact-tagline"></p>
-        <p class="contact-item"><span class="contact-icon"><img src="Front2/Pin.png" alt="Adresse" width="44" height="44" loading="eager"></span>Am Kreuzstein 2, 91126 Schwabach</p><br>
-        <p class="contact-item"><span class="contact-icon"><img src="Front2/Telefon.png" alt="Telefon" width="44" height="44" loading="eager"></span><a href="tel:+4991261886311">09126/1886311</a></p><br>
-        <p class="contact-item"><span class="contact-icon"><img src="Front2/Brief.png" alt="E-Mail" width="44" height="44" loading="eager"></span><a href="mailto:selber@cesare-kaiser.de" class="email-link">selber@cesare-kaiser.de</a></p><br>
+        <p class="contact-item"><span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7z"/><circle cx="12" cy="9" r="2.25"/></svg></span>Am Kreuzstein 2, 91126 Schwabach</p><br>
+        <p class="contact-item"><span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.97.36 1.91.72 2.78a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.11-.45c.87.36 1.81.6 2.78.72A2 2 0 0 1 22 16.92z"/></svg></span><a href="tel:+4991261886311">09126/1886311</a></p><br>
+        <p class="contact-item"><span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1z"/><polyline points="4 6.5 12 13 20 6.5"/></svg></span><a href="mailto:selber@cesare-kaiser.de" class="email-link">selber@cesare-kaiser.de</a></p><br>
         </div>
       </div>
     </div>
