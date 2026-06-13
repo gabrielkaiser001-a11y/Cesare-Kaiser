@@ -467,7 +467,7 @@
   </div>
 </div>
 
-<footer><span>© 2026 Cesare Kaiser</span><span>Alle Rechte vorbehalten</span><span class="footer-version">v1.18</span></footer>
+<footer><span>© 2026 Cesare Kaiser</span><span>Alle Rechte vorbehalten</span><span class="footer-version">v1.19</span></footer>
 <!-- website version v1.16 -->
 
 <!-- EXTRA TEXT MODAL -->
@@ -1291,7 +1291,29 @@ let WORKS = {
       "extra": null
     }
   ],
-  "rumpelkammer": []
+  "rumpelkammer": [
+      {
+        "title": "Eine Zensur findet nicht statt",
+        "img": "Rumpelkammer/1.jpg",
+        "desc": "",
+        "size": "",
+        "extra": null
+      },
+      {
+        "title": "Rumpelkammer 2",
+        "img": "Rumpelkammer/2.jpg",
+        "desc": "",
+        "size": "",
+        "extra": null
+      },
+      {
+        "title": "Rumpelkammer 3",
+        "img": "Rumpelkammer/3.jpg",
+        "desc": "",
+        "size": "",
+        "extra": null
+      },
+  ]
 };
 
 // ── Ausstellungs-Daten ────────────────────────────────────────────────────────
@@ -1479,7 +1501,7 @@ function openCat(id,name,note) {
   // If this is the Ich-Serie category, append a single "Zum Original" button to the category note
   if (id === 'ich-serie') {
     // show a single small preview image inline that opens the dedicated original image when clicked
-    const originalSrc = 'IchSerie/100.png';
+    const originalSrc = 'IchSerie/100.jpg';
     noteEl.innerHTML = (note||'') + ` <img id="cat-original-thumb" class="original-thumb" src="${originalSrc}" alt="Vorschau Original"/>`;
     const thumb = document.getElementById('cat-original-thumb');
     if (thumb) thumb.addEventListener('click', function(e){ e.stopPropagation(); openOriginal(e, originalSrc); });
