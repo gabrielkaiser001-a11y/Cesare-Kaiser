@@ -119,6 +119,11 @@
     #page-category .s-title,
     #page-category .cat-note { width:100%; max-width:1300px; margin-left:auto; margin-right:auto; }
     .cat-note { font-size:0.88rem; color:var(--lgrey); font-style:italic; margin-top:6px; margin-bottom:32px; max-width:720px; line-height:1.7; }
+    /* Ich-Serie: place the optional original thumbnail to the right of the note */
+    .cat-note-inner { display:flex; gap:18px; align-items:flex-start; }
+    .cat-note-text { flex:1; }
+    .cat-note-thumb-wrap { flex:0 0 140px; display:flex; align-items:flex-start; justify-content:flex-end; }
+    .cat-note-thumb-wrap .original-thumb { width:140px; height:auto; margin-left:0; }
 
     .empty-state { padding:60px 0; color:var(--grey); font-size:0.9rem; letter-spacing:0.1em; }
     .empty-state span { display:block; font-family:var(--font-d); font-size:1.4rem; font-weight:300; color:var(--lgrey); margin-bottom:8px; }
@@ -467,7 +472,7 @@
   </div>
 </div>
 
-<footer><span>© 2026 Cesare Kaiser</span><span>Alle Rechte vorbehalten</span><span class="footer-version">v1.19</span></footer>
+<footer><span>© 2026 Cesare Kaiser</span><span>Alle Rechte vorbehalten</span><span class="footer-version">v1.20</span></footer>
 <!-- website version v1.16 -->
 
 <!-- EXTRA TEXT MODAL -->
@@ -1500,9 +1505,15 @@ function openCat(id,name,note) {
   }
   // If this is the Ich-Serie category, append a single "Zum Original" button to the category note
   if (id === 'ich-serie') {
-    // show a single small preview image inline that opens the dedicated original image when clicked
+    // show a single small preview image inline to the right of the category note
     const originalSrc = 'IchSerie/100.jpg';
-    noteEl.innerHTML = (note||'') + ` <img id="cat-original-thumb" class="original-thumb" src="${originalSrc}" alt="Vorschau Original"/>`;
+    noteEl.innerHTML = `\
+      <div class="cat-note-inner">\
+        <div class="cat-note-text">${note || ''}</div>\
+        <div class="cat-note-thumb-wrap">\
+          <img id="cat-original-thumb" class="original-thumb" src="${originalSrc}" alt="Vorschau Original"/>\
+        </div>\
+      </div>`;
     const thumb = document.getElementById('cat-original-thumb');
     if (thumb) thumb.addEventListener('click', function(e){ e.stopPropagation(); openOriginal(e, originalSrc); });
   }
